@@ -43,3 +43,4 @@ pip-log.txt
 *.pem
 *.crt
 secrets/
+claude-standalone/reports-ui-redesign/*

@@ -56,3 +56,46 @@ daemons — only use the host Docker daemon via the socket.
 
 Git is pre-configured with an SSH key for the repo. Do not modify the
 `GIT_SSH_COMMAND` environment variable.
+
+## Slack Updates
+
+The environment variable `SLACK_WEBHOOK_URL` contains a Slack incoming-webhook
+URL. Use it to post progress updates so the user can follow along without
+watching the terminal.
+
+Send a message with:
+
+```bash
+curl -s -X POST "$SLACK_WEBHOOK_URL" \
+  -H 'Content-Type: application/json' \
+  -d '{"text":"your message here"}'
+```
+
+**When to post:**
+
+- When you start a significant task or subtask.
+- When you finish a task or hit a meaningful milestone.
+- When you encounter a blocker or need user input.
+- A brief summary when you complete the session.
+
+Keep messages short (1–3 sentences). Do not post for every minor file edit.
+
+### Uploading Images / Files to Slack
+
+To send images or files, use the Slack Bot token and channel ID:
+
+- `SLACK_BOT_TOKEN` — OAuth bot token (`xoxb-...`)
+- `SLACK_CHANNEL_ID` — target channel
+
+Upload a file with:
+
+```bash
+curl -s -F "file=@/path/to/image.png" \
+  -F "channels=${SLACK_CHANNEL_ID}" \
+  -F "initial_comment=Here is the screenshot" \
+  -H "Authorization: Bearer ${SLACK_BOT_TOKEN}" \
+  https://slack.com/api/files.upload
+```
+
+Use this to share screenshots, generated diagrams, build output, or any other
+file the user might find useful.

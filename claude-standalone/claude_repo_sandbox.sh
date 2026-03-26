@@ -25,6 +25,11 @@
 #                     container so Claude can run docker build/run against the
 #                     host daemon.  SECURITY NOTE: this grants near-root access
 #                     to the host — use only when you need in-container Docker.
+#   SLACK_WEBHOOK_URL  Slack incoming-webhook URL.  Passed into the container
+#                     so Claude can post progress updates via curl.
+#   SLACK_BOT_TOKEN    Slack Bot OAuth token (xoxb-...).  Needed to upload
+#                     images/files via the Slack API.
+#   SLACK_CHANNEL_ID   Slack channel ID to upload files to.
 #
 set -euo pipefail
 
@@ -262,6 +267,17 @@ RUN_ARGS+=(
   # Entrypoint override
   --entrypoint /bin/bash
 )
+
+# Forward optional environment variables into the container
+if [[ -n "${SLACK_WEBHOOK_URL:-}" ]]; then
+  RUN_ARGS+=( -e "SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}" )
+fi
+if [[ -n "${SLACK_BOT_TOKEN:-}" ]]; then
+  RUN_ARGS+=( -e "SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}" )
+fi
+if [[ -n "${SLACK_CHANNEL_ID:-}" ]]; then
+  RUN_ARGS+=( -e "SLACK_CHANNEL_ID=${SLACK_CHANNEL_ID}" )
+fi
 
 # ── Build the claude command line ────────────────────────────────────────────
 CLAUDE_CMD="claude --dangerously-skip-permissions"

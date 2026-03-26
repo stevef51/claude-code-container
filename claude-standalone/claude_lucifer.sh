@@ -45,4 +45,11 @@ export MOUNT_DOCKER="${MOUNT_DOCKER:-1}"
 # Set to 1 (or use RESUME=1 env) to resume the most recent conversation
 export RESUME="${RESUME:-0}"
 
+# Slack webhook for Claude to post progress updates
+export SLACK_WEBHOOK_URL="SLACK_WEBHOOK_PLACEHOLDER"
+
+# Slack Bot OAuth token + channel for image/file uploads
+export SLACK_BOT_TOKEN="SLACK_BOT_TOKEN_PLACEHOLDER"
+export SLACK_CHANNEL_ID="C0ANJD0194P"
+
 exec "$(dirname "$0")/claude_repo_sandbox.sh"
