@@ -1,0 +1,2 @@
+# Encrypt secrets files with git-crypt
+claude-standalone/.secrets.env filter=git-crypt diff=git-crypt

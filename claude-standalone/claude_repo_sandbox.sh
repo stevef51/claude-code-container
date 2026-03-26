@@ -278,6 +278,9 @@ fi
 if [[ -n "${SLACK_CHANNEL_ID:-}" ]]; then
   RUN_ARGS+=( -e "SLACK_CHANNEL_ID=${SLACK_CHANNEL_ID}" )
 fi
+if [[ -n "${GITHUB_TOKEN:-}" ]]; then
+  RUN_ARGS+=( -e "GITHUB_TOKEN=${GITHUB_TOKEN}" )
+fi
 
 # ── Build the claude command line ────────────────────────────────────────────
 CLAUDE_CMD="claude --dangerously-skip-permissions"

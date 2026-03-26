@@ -52,4 +52,7 @@ export SLACK_WEBHOOK_URL="SLACK_WEBHOOK_PLACEHOLDER"
 export SLACK_BOT_TOKEN="SLACK_BOT_TOKEN_PLACEHOLDER"
 export SLACK_CHANNEL_ID="C0ANJD0194P"
 
+# GitHub PAT for API access (issues, PRs, gh CLI, etc.)
+export GITHUB_TOKEN="GITHUB_PAT_PLACEHOLDER"
+
 exec "$(dirname "$0")/claude_repo_sandbox.sh"
