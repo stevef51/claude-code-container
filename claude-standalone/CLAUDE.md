@@ -19,6 +19,17 @@ Post progress via: `curl -s -X POST "$SLACK_WEBHOOK_URL" -H 'Content-Type: appli
 Upload files via: `curl -s -F "file=@path" -F "channels=$SLACK_CHANNEL_ID" -F "initial_comment=desc" -H "Authorization: Bearer $SLACK_BOT_TOKEN" https://slack.com/api/files.upload`
 Post on: task start, milestones, blockers, session end. Keep short.
 
+**Brag about your work.** After each milestone, finished ticket, or any notable
+achievement — send a Slack message showing off what you did. Include:
+
+- A short summary of what was accomplished.
+- Screenshots (capture the UI, terminal output, test results, etc.).
+- Screen recordings / videos when the result involves interaction or animation.
+- Before/after comparisons when visual changes are involved.
+
+Use screen capture and video recording tools — install them if needed. The user
+wants to see proof, not just text. Be proud of your work and show it.
+
 ---
 
 ## Non-Negotiable Rules
