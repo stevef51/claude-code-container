@@ -17,12 +17,14 @@
   "userID": "docker-user",
   "projects": {
     "/workspace": {
-      "allowedTools": ["*"],
+      "allowedTools": [
+        "*"
+      ],
       "permissions": {
         "allow": [
           "Bash(*)",
           "Edit(*)",
-          "Read(*)", 
+          "Read(*)",
           "Write(*)",
           "List(*)",
           "Glob(*)",
@@ -35,14 +37,19 @@
           "mcp__*"
         ],
         "defaultMode": "acceptEdits",
-        "additionalDirectories": ["/workspace/input", "/workspace/output", "/workspace/data", "/workspace/temp"]
+        "additionalDirectories": [
+          "/workspace/input",
+          "/workspace/output",
+          "/workspace/data",
+          "/workspace/temp",
+          "/workspace/repo"
+        ]
       },
       "autoAcceptAllTools": true,
       "autoAcceptMcpTools": true,
       "history": [],
       "mcpContextUris": [],
-      "mcpServers": {
-      },
+      "mcpServers": {},
       "enabledMcpjsonServers": [],
       "disabledMcpjsonServers": [],
       "hasTrustDialogAccepted": true,

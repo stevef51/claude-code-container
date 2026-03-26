@@ -11,6 +11,7 @@ RUN groupadd -g ${USER_ID} ${USER_NAME} && \
 # Install system dependencies with security hardening
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git curl wget ca-certificates python3 python3-pip build-essential \
+    openssh-client \
     # Security packages
     dumb-init \
     && rm -rf /var/lib/apt/lists/* \
@@ -21,6 +22,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && find / -xdev -perm -2000 -type f -exec chmod g-s {} \; 2>/dev/null || true \
     # Remove network tools that could be used for reconnaissance (but keep essential shells)
     && rm -f /usr/bin/nc /usr/bin/netcat /bin/netstat /usr/bin/ss || true
+
+# Docker CLI — allows the container to drive the host Docker daemon when the
+# socket is mounted in (MOUNT_DOCKER mode).  Only the CLI is installed; the
+# daemon itself is NOT running inside the container.
+RUN apt-get update && apt-get install -y --no-install-recommends docker.io \
+    && rm -rf /var/lib/apt/lists/*
+
+# Optional sudo support for tool installation (ALLOW_INSTALL mode).
+# The default runtime uses --security-opt=no-new-privileges which neutralises
+# sudo's setuid bit. Only effective when the launcher explicitly relaxes that.
+RUN apt-get update && apt-get install -y --no-install-recommends sudo \
+    && rm -rf /var/lib/apt/lists/* \
+    && echo 'claude ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/claude \
+    && chmod 440 /etc/sudoers.d/claude
 
 # Install basic Python tools
 RUN pip3 install --no-cache-dir --break-system-packages \
@@ -70,7 +85,9 @@ RUN mkdir -p /workspace/input \
     && mkdir -p /workspace/data \
     && mkdir -p /workspace/temp \
     && mkdir -p /workspace/mcp-servers \
+    && mkdir -p /opt/tools \
     && chown -R ${USER_NAME}:${USER_NAME} /workspace \
+    && chown -R ${USER_NAME}:${USER_NAME} /opt/tools \
     && chmod 755 /workspace \
     && chmod 750 /workspace/input \
     && chmod 750 /workspace/data \
@@ -82,6 +99,9 @@ RUN mkdir -p /workspace/input \
 # Copy the working Claude config
 COPY --chown=${USER_NAME}:${USER_NAME} claude-config.json /tmp/claude-config.json
 COPY --chown=${USER_NAME}:${USER_NAME} settings.local.json /tmp/settings.local.json
+
+# Bake container-level instructions so Claude knows about /opt/tools, etc.
+COPY --chown=${USER_NAME}:${USER_NAME} CLAUDE.md /workspace/CLAUDE.md
 
 # Setup Claude configuration (as root, will switch to claude user)
 RUN echo '#!/bin/bash\n\
