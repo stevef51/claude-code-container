@@ -5,8 +5,8 @@ Work dir: `/workspace/repo`. Reports/deliverables: `/workspace/output` (host-vis
 ## Tool Persistence
 
 Installed tools (apt, pip, npm -g) don't survive restarts. Persistent volume at `/opt/tools`.
-After installing a tool, append the command to `/opt/tools/setup.sh` — it auto-runs on startup.
-Rules: use `sudo` for apt, `-y -qq` flags, keep idempotent.
+After installing a tool, **always** update `/opt/tools/setup.sh` in the same step so it auto-reinstalls on next startup.
+Never install a tool without adding it to setup.sh. Rules: use `sudo` for apt, `-y -qq` flags, keep idempotent.
 
 ## Docker / Git
 
