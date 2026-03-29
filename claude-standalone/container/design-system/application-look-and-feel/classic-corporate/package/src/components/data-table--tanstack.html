@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Table (TanStack) — Classic Corporate</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 222 47% 11%;
+      --card: 0 0% 100%;
+      --card-foreground: 222 47% 11%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 222 47% 11%;
+      --primary: 217 87% 17%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 210 40% 96%;
+      --secondary-foreground: 222 47% 11%;
+      --muted: 210 40% 96%;
+      --muted-foreground: 215 16% 47%;
+      --accent: 187 85% 43%;
+      --accent-foreground: 222 47% 11%;
+      --destructive: 0 84% 60%;
+      --destructive-foreground: 0 0% 100%;
+      --border: 214 32% 91%;
+      --input: 214 32% 91%;
+      --ring: 217 87% 17%;
+      --radius: 0.5rem;
+    }
+
+    * {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      border-color: hsl(var(--border));
+    }
+
+    body {
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+    }
+
+    /* Primary button gradient */
+    button[data-element-id="toolbar-filter"]:hover,
+    button[data-element-id="toolbar-columns"]:hover {
+      background: hsl(var(--secondary));
+      border-color: hsl(var(--accent));
+    }
+
+    /* Table row hover effects */
+    tr[data-element-id^="trow-"] {
+      transition: background-color 0.15s ease;
+    }
+
+    tr[data-element-id^="trow-"]:hover {
+      background-color: hsl(210 40% 96% / 0.5);
+    }
+
+    /* Input focus styles */
+    input[data-element-id="toolbar-search"]:focus {
+      border-color: hsl(var(--accent));
+      box-shadow: 0 0 0 3px hsl(var(--accent) / 0.15);
+      outline: none;
+    }
+
+    /* Pagination button hover */
+    div[data-element-id="table-pagination"] button:hover {
+      background: hsl(var(--secondary));
+      border-color: hsl(var(--accent));
+    }
+
+    /* Header sort icon hover */
+    th[data-element-id="col-status"]:hover,
+    th[data-element-id="col-email"]:hover {
+      color: hsl(var(--accent));
+    }
+
+    /* Action menu button hover */
+    tr button:hover {
+      background-color: hsl(var(--secondary));
+      color: hsl(var(--accent));
+    }
+
+    /* Fade in animation */
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-white">
+  <!-- Header with Logo -->
+  <header class="w-full py-6 px-8 border-b border-slate-100 bg-white" data-element-id="page-header-banner">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4" data-element-id="logo-container">
+        <img src="./images/vm-logo.png" alt="Virtual Manager Logo" class="h-12 w-auto" data-element-id="company-logo">
+        <img src="./images/virtual-mgr-text.png" alt="Virtual Manager" class="h-8 w-auto" data-element-id="company-text">
+      </div>
+      <span class="text-sm text-slate-500 font-medium" data-element-id="product-tag">HealthClean™</span>
+    </div>
+  </header>
+
+  <div class="max-w-4xl mx-auto p-8 space-y-12 fade-in">
+    <header data-element-id="page-header">
+      <h1 data-element-id="page-title" class="text-3xl font-bold tracking-tight" style="color: hsl(var(--foreground))">Data Table (TanStack)</h1>
+      <p data-element-id="page-description" class="mt-2 text-lg" style="color: hsl(var(--muted-foreground))">Advanced data table with sorting, filtering, and pagination.</p>
+    </header>
+
+    <!-- Table Toolbar -->
+    <section data-element-id="table-toolbar-section" class="space-y-6">
+      <h2 data-element-id="table-toolbar-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Table with Toolbar</h2>
+      <div class="space-y-4">
+        <div data-element-id="toolbar" class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <input data-element-id="toolbar-search" type="text" placeholder="Filter emails..." class="flex h-10 w-64 px-3 py-2 text-sm focus-visible:outline-none transition-all duration-200" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)" />
+            <button data-element-id="toolbar-filter" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 py-2 gap-2 transition-all duration-200" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+              Status
+            </button>
+          </div>
+          <button data-element-id="toolbar-columns" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 py-2 gap-2 transition-all duration-200" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+            Columns
+          </button>
+        </div>
+
+        <div class="overflow-hidden" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius)">
+          <table data-element-id="tanstack-table" class="w-full text-sm">
+            <thead>
+              <tr style="border-bottom: 1px solid hsl(var(--border))">
+                <th class="h-12 px-4 text-left align-middle w-10">
+                  <div class="h-4 w-4 shrink-0 rounded-sm" style="border: 1px solid hsl(var(--input))"></div>
+                </th>
+                <th data-element-id="col-status" class="h-12 px-4 text-left align-middle font-medium cursor-pointer transition-colors duration-200" style="color: hsl(var(--muted-foreground))">
+                  <span class="flex items-center gap-1">Status <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path></svg></span>
+                </th>
+                <th data-element-id="col-email" class="h-12 px-4 text-left align-middle font-medium cursor-pointer transition-colors duration-200" style="color: hsl(var(--muted-foreground))">
+                  <span class="flex items-center gap-1">Email <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path></svg></span>
+                </th>
+                <th data-element-id="col-amount" class="h-12 px-4 text-right align-middle font-medium" style="color: hsl(var(--muted-foreground))">Amount</th>
+                <th class="h-12 px-4 text-right align-middle w-10"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-element-id="trow-1" style="border-bottom: 1px solid hsl(var(--border))">
+                <td class="p-4 align-middle"><div class="h-4 w-4 shrink-0 rounded-sm flex items-center justify-center" style="border: 1px solid hsl(var(--primary)); background: hsl(var(--primary))"><svg class="h-3 w-3" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg></div></td>
+                <td class="p-4 align-middle"><span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold" style="background: hsl(var(--secondary)); color: hsl(var(--secondary-foreground)); border-radius: 9999px">Success</span></td>
+                <td class="p-4 align-middle" style="color: hsl(var(--foreground))">ken99@yahoo.com</td>
+                <td class="p-4 align-middle text-right font-medium" style="color: hsl(var(--foreground))">$316.00</td>
+                <td class="p-4 align-middle text-right"><button class="h-8 w-8 inline-flex items-center justify-center transition-all duration-200" style="color: hsl(var(--muted-foreground)); border-radius: var(--radius)">...</button></td>
+              </tr>
+              <tr data-element-id="trow-2" style="border-bottom: 1px solid hsl(var(--border))">
+                <td class="p-4 align-middle"><div class="h-4 w-4 shrink-0 rounded-sm" style="border: 1px solid hsl(var(--input))"></div></td>
+                <td class="p-4 align-middle"><span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold" style="background: hsl(var(--secondary)); color: hsl(var(--secondary-foreground)); border-radius: 9999px">Success</span></td>
+                <td class="p-4 align-middle" style="color: hsl(var(--foreground))">abe45@gmail.com</td>
+                <td class="p-4 align-middle text-right font-medium" style="color: hsl(var(--foreground))">$242.00</td>
+                <td class="p-4 align-middle text-right"><button class="h-8 w-8 inline-flex items-center justify-center transition-all duration-200" style="color: hsl(var(--muted-foreground)); border-radius: var(--radius)">...</button></td>
+              </tr>
+              <tr data-element-id="trow-3" style="border-bottom: 1px solid hsl(var(--border))">
+                <td class="p-4 align-middle"><div class="h-4 w-4 shrink-0 rounded-sm" style="border: 1px solid hsl(var(--input))"></div></td>
+                <td class="p-4 align-middle"><span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold" style="border: 1px solid hsl(var(--border)); color: hsl(var(--foreground)); border-radius: 9999px">Processing</span></td>
+                <td class="p-4 align-middle" style="color: hsl(var(--foreground))">monserrat44@gmail.com</td>
+                <td class="p-4 align-middle text-right font-medium" style="color: hsl(var(--foreground))">$837.00</td>
+                <td class="p-4 align-middle text-right"><button class="h-8 w-8 inline-flex items-center justify-center transition-all duration-200" style="color: hsl(var(--muted-foreground)); border-radius: var(--radius)">...</button></td>
+              </tr>
+              <tr data-element-id="trow-4" style="border-bottom: 1px solid hsl(var(--border))">
+                <td class="p-4 align-middle"><div class="h-4 w-4 shrink-0 rounded-sm" style="border: 1px solid hsl(var(--input))"></div></td>
+                <td class="p-4 align-middle"><span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold" style="background: hsl(var(--destructive)); color: hsl(var(--destructive-foreground)); border-radius: 9999px">Failed</span></td>
+                <td class="p-4 align-middle" style="color: hsl(var(--foreground))">silas22@gmail.com</td>
+                <td class="p-4 align-middle text-right font-medium" style="color: hsl(var(--foreground))">$874.00</td>
+                <td class="p-4 align-middle text-right"><button class="h-8 w-8 inline-flex items-center justify-center transition-all duration-200" style="color: hsl(var(--muted-foreground)); border-radius: var(--radius)">...</button></td>
+              </tr>
+              <tr data-element-id="trow-5">
+                <td class="p-4 align-middle"><div class="h-4 w-4 shrink-0 rounded-sm" style="border: 1px solid hsl(var(--input))"></div></td>
+                <td class="p-4 align-middle"><span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold" style="background: hsl(var(--secondary)); color: hsl(var(--secondary-foreground)); border-radius: 9999px">Success</span></td>
+                <td class="p-4 align-middle" style="color: hsl(var(--foreground))">carmella@hotmail.com</td>
+                <td class="p-4 align-middle text-right font-medium" style="color: hsl(var(--foreground))">$721.00</td>
+                <td class="p-4 align-middle text-right"><button class="h-8 w-8 inline-flex items-center justify-center transition-all duration-200" style="color: hsl(var(--muted-foreground)); border-radius: var(--radius)">...</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div data-element-id="table-pagination" class="flex items-center justify-between">
+          <p class="text-sm" style="color: hsl(var(--muted-foreground))">1 of 5 row(s) selected.</p>
+          <div class="flex items-center gap-2">
+            <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-9 px-3 transition-all duration-200" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">Previous</button>
+            <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-9 px-3 transition-all duration-200" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">Next</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

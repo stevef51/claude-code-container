@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout — Classic Corporate</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 222 47% 11%;
+      --card: 0 0% 100%;
+      --card-foreground: 222 47% 11%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 222 47% 11%;
+      --primary: 217 87% 17%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 210 40% 96%;
+      --secondary-foreground: 222 47% 11%;
+      --muted: 210 40% 96%;
+      --muted-foreground: 215 16% 47%;
+      --accent: 187 85% 43%;
+      --accent-foreground: 222 47% 11%;
+      --destructive: 0 84% 60%;
+      --destructive-foreground: 0 0% 100%;
+      --border: 214 32% 91%;
+      --input: 214 32% 91%;
+      --ring: 217 87% 17%;
+      --radius: 0.5rem;
+    }
+
+    * {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      border-color: hsl(var(--border));
+    }
+
+    body {
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+    }
+
+    /* Primary button gradient */
+    button[data-element-id="header-cta"],
+    button[data-element-id="hero-cta-primary"] {
+      background: linear-gradient(135deg, #052252 0%, #0a3a7a 100%);
+      transition: all 0.2s ease-in-out;
+    }
+
+    button[data-element-id="header-cta"]:hover,
+    button[data-element-id="hero-cta-primary"]:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px hsl(217 87% 17% / 0.4);
+    }
+
+    /* Secondary/outline button hover */
+    button[data-element-id="hero-cta-secondary"] {
+      transition: all 0.2s ease-in-out;
+    }
+
+    button[data-element-id="hero-cta-secondary"]:hover {
+      background: hsl(var(--secondary));
+      border-color: hsl(var(--accent));
+    }
+
+    /* Navigation link hover effects */
+    a[data-element-id="header-nav-features"],
+    a[data-element-id="header-nav-pricing"],
+    a[data-element-id="header-nav-docs"],
+    a[data-element-id="header-nav-blog"] {
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    a[data-element-id="header-nav-features"]::after,
+    a[data-element-id="header-nav-pricing"]::after,
+    a[data-element-id="header-nav-docs"]::after,
+    a[data-element-id="header-nav-blog"]::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: hsl(var(--accent));
+      transition: width 0.2s ease;
+    }
+
+    a[data-element-id="header-nav-features"]:hover::after,
+    a[data-element-id="header-nav-pricing"]:hover::after,
+    a[data-element-id="header-nav-docs"]:hover::after,
+    a[data-element-id="header-nav-blog"]:hover::after {
+      width: 100%;
+    }
+
+    a[data-element-id="header-nav-features"]:hover,
+    a[data-element-id="header-nav-pricing"]:hover,
+    a[data-element-id="header-nav-docs"]:hover,
+    a[data-element-id="header-nav-blog"]:hover {
+      color: hsl(var(--accent));
+    }
+
+    /* Grid item hover effects */
+    div[data-element-id="grid-item-1"],
+    div[data-element-id="grid-item-2"],
+    div[data-element-id="grid-item-3"] {
+      transition: all 0.2s ease-in-out;
+    }
+
+    div[data-element-id="grid-item-1"]:hover,
+    div[data-element-id="grid-item-2"]:hover,
+    div[data-element-id="grid-item-3"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Content section image placeholder */
+    div[data-element-id="content-image"] {
+      transition: all 0.2s ease;
+    }
+
+    div[data-element-id="content-image"]:hover {
+      border-color: hsl(var(--accent));
+    }
+
+    /* Footer link hover */
+    footer a:hover {
+      opacity: 1 !important;
+      color: hsl(var(--accent));
+    }
+
+    footer a {
+      transition: opacity 0.2s ease, color 0.2s ease;
+    }
+
+    /* Social icons hover */
+    a[data-element-id="footer-social-twitter"]:hover,
+    a[data-element-id="footer-social-github"]:hover {
+      opacity: 1 !important;
+      color: hsl(var(--accent));
+    }
+
+    /* Fade in animation */
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Header login button hover */
+    button[data-element-id="header-login"] {
+      transition: all 0.2s ease;
+    }
+
+    button[data-element-id="header-login"]:hover {
+      background: hsl(var(--secondary));
+      color: hsl(var(--accent));
+    }
+
+    /* Hero badge */
+    span[data-element-id="hero-badge"] {
+      transition: all 0.2s ease;
+    }
+
+    span[data-element-id="hero-badge"]:hover {
+      background: hsl(var(--accent) / 0.1);
+      color: hsl(var(--accent));
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-white">
+  <!-- Header with Logo -->
+  <header class="w-full py-6 px-8 border-b border-slate-100 bg-white" data-element-id="page-header-banner">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4" data-element-id="logo-container">
+        <img src="./images/vm-logo.png" alt="Virtual Manager Logo" class="h-12 w-auto" data-element-id="company-logo">
+        <img src="./images/virtual-mgr-text.png" alt="Virtual Manager" class="h-8 w-auto" data-element-id="company-text">
+      </div>
+      <span class="text-sm text-slate-500 font-medium" data-element-id="product-tag">HealthClean™</span>
+    </div>
+  </header>
+
+  <div class="space-y-12 pb-12 fade-in">
+    <div class="max-w-4xl mx-auto px-8 pt-8">
+      <header data-element-id="page-header">
+        <h1 data-element-id="page-title" class="text-3xl font-bold tracking-tight" style="color: hsl(var(--foreground))">Layout</h1>
+        <p data-element-id="page-description" class="mt-2 text-lg" style="color: hsl(var(--muted-foreground))">Page structure components for building complete layouts.</p>
+      </header>
+    </div>
+
+    <!-- Header -->
+    <section data-element-id="header-section" class="space-y-4">
+      <h2 data-element-id="header-heading" class="text-xl font-semibold pb-2 max-w-4xl mx-auto px-8" style="border-bottom: 1px solid hsl(var(--border))">Header</h2>
+      <header data-element-id="site-header" class="w-full" style="background: hsl(var(--background)); border-bottom: 1px solid hsl(var(--border))">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div class="flex items-center gap-8">
+            <a data-element-id="header-logo" href="#" class="text-xl font-bold" style="color: hsl(var(--foreground))">ProductName</a>
+            <nav class="flex items-center gap-6">
+              <a data-element-id="header-nav-features" href="#" class="text-sm" style="color: hsl(var(--muted-foreground))">Features</a>
+              <a data-element-id="header-nav-pricing" href="#" class="text-sm" style="color: hsl(var(--muted-foreground))">Pricing</a>
+              <a data-element-id="header-nav-docs" href="#" class="text-sm" style="color: hsl(var(--muted-foreground))">Docs</a>
+              <a data-element-id="header-nav-blog" href="#" class="text-sm" style="color: hsl(var(--muted-foreground))">Blog</a>
+            </nav>
+          </div>
+          <div class="flex items-center gap-3">
+            <button data-element-id="header-login" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 py-2" style="color: hsl(var(--foreground)); border-radius: var(--radius)">Log in</button>
+            <button data-element-id="header-cta" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 py-2" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">Start Free Trial</button>
+          </div>
+        </div>
+      </header>
+    </section>
+
+    <!-- Hero Section -->
+    <section data-element-id="hero-section" class="space-y-4">
+      <h2 data-element-id="hero-heading" class="text-xl font-semibold pb-2 max-w-4xl mx-auto px-8" style="border-bottom: 1px solid hsl(var(--border))">Hero Section</h2>
+      <div data-element-id="hero" class="w-full py-20" style="background: hsl(var(--muted))">
+        <div class="max-w-3xl mx-auto text-center px-6 space-y-6">
+          <span data-element-id="hero-badge" class="inline-flex items-center px-3 py-1 text-xs font-semibold" style="background: hsl(var(--secondary)); color: hsl(var(--secondary-foreground)); border-radius: 9999px">Now in Beta</span>
+          <h2 data-element-id="hero-title" class="text-4xl font-bold tracking-tight" style="color: hsl(var(--foreground))">Build better products, faster</h2>
+          <p data-element-id="hero-subtitle" class="text-lg" style="color: hsl(var(--muted-foreground))">The modern platform for teams that want to ship with confidence. Streamline your workflow from idea to production.</p>
+          <div data-element-id="hero-actions" class="flex items-center justify-center gap-4">
+            <button data-element-id="hero-cta-primary" class="inline-flex items-center justify-center whitespace-nowrap font-medium h-11 px-8 text-sm" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">Get Started Free</button>
+            <button data-element-id="hero-cta-secondary" class="inline-flex items-center justify-center whitespace-nowrap font-medium h-11 px-8 text-sm" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">View Demo</button>
+          </div>
+          <p data-element-id="hero-footnote" class="text-sm" style="color: hsl(var(--muted-foreground))">No credit card required. Free for up to 5 users.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content Section (Two-Column) -->
+    <section data-element-id="content-section" class="space-y-4">
+      <h2 data-element-id="content-heading" class="text-xl font-semibold pb-2 max-w-4xl mx-auto px-8" style="border-bottom: 1px solid hsl(var(--border))">Content Section</h2>
+      <div data-element-id="two-column" class="max-w-6xl mx-auto px-6 py-12">
+        <div class="grid grid-cols-2 gap-12 items-center">
+          <div data-element-id="content-text" class="space-y-4">
+            <h3 data-element-id="content-title" class="text-2xl font-bold tracking-tight" style="color: hsl(var(--foreground))">Designed for productivity</h3>
+            <p data-element-id="content-body" style="color: hsl(var(--muted-foreground))">Our tools are built to help your team focus on what matters most. Reduce context switching and keep everyone aligned with real-time collaboration.</p>
+            <ul data-element-id="content-features" class="space-y-2">
+              <li data-element-id="feature-1" class="flex items-center gap-2 text-sm" style="color: hsl(var(--foreground))">
+                <svg class="w-4 h-4" style="color: #16a34a" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                Real-time collaboration
+              </li>
+              <li data-element-id="feature-2" class="flex items-center gap-2 text-sm" style="color: hsl(var(--foreground))">
+                <svg class="w-4 h-4" style="color: #16a34a" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                Automated workflows
+              </li>
+              <li data-element-id="feature-3" class="flex items-center gap-2 text-sm" style="color: hsl(var(--foreground))">
+                <svg class="w-4 h-4" style="color: #16a34a" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                Integrated analytics
+              </li>
+            </ul>
+          </div>
+          <div data-element-id="content-image" class="h-64 flex items-center justify-center" style="background: hsl(var(--muted)); border-radius: var(--radius); border: 1px solid hsl(var(--border))">
+            <span class="text-sm" style="color: hsl(var(--muted-foreground))">Feature illustration</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grid System -->
+    <section data-element-id="grid-section" class="space-y-4 max-w-4xl mx-auto px-8">
+      <h2 data-element-id="grid-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Grid System</h2>
+      <div data-element-id="grid-3col" class="grid grid-cols-3 gap-6">
+        <div data-element-id="grid-item-1" class="p-6 text-center space-y-2" style="background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: var(--radius)">
+          <div class="w-10 h-10 mx-auto flex items-center justify-center" style="background: hsl(var(--muted)); border-radius: var(--radius)">
+            <svg class="w-5 h-5" style="color: hsl(var(--primary))" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          </div>
+          <h4 class="font-semibold text-sm" style="color: hsl(var(--card-foreground))">Lightning Fast</h4>
+          <p class="text-xs" style="color: hsl(var(--muted-foreground))">Optimized for speed with sub-second load times.</p>
+        </div>
+        <div data-element-id="grid-item-2" class="p-6 text-center space-y-2" style="background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: var(--radius)">
+          <div class="w-10 h-10 mx-auto flex items-center justify-center" style="background: hsl(var(--muted)); border-radius: var(--radius)">
+            <svg class="w-5 h-5" style="color: hsl(var(--primary))" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          </div>
+          <h4 class="font-semibold text-sm" style="color: hsl(var(--card-foreground))">Secure by Default</h4>
+          <p class="text-xs" style="color: hsl(var(--muted-foreground))">Enterprise-grade security with SOC 2 compliance.</p>
+        </div>
+        <div data-element-id="grid-item-3" class="p-6 text-center space-y-2" style="background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: var(--radius)">
+          <div class="w-10 h-10 mx-auto flex items-center justify-center" style="background: hsl(var(--muted)); border-radius: var(--radius)">
+            <svg class="w-5 h-5" style="color: hsl(var(--primary))" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path></svg>
+          </div>
+          <h4 class="font-semibold text-sm" style="color: hsl(var(--card-foreground))">Flexible Layout</h4>
+          <p class="text-xs" style="color: hsl(var(--muted-foreground))">Customize every aspect to match your brand.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <section data-element-id="footer-section" class="space-y-4">
+      <h2 data-element-id="footer-heading" class="text-xl font-semibold pb-2 max-w-4xl mx-auto px-8" style="border-bottom: 1px solid hsl(var(--border))">Footer</h2>
+      <footer data-element-id="site-footer" class="w-full" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground))">
+        <div class="max-w-6xl mx-auto px-6 py-12">
+          <div class="grid grid-cols-4 gap-8">
+            <div data-element-id="footer-brand" class="space-y-3">
+              <p class="text-lg font-bold">ProductName</p>
+              <p class="text-sm opacity-70">Building the future of team collaboration, one feature at a time.</p>
+            </div>
+            <div data-element-id="footer-product" class="space-y-3">
+              <p class="text-sm font-semibold opacity-80">Product</p>
+              <nav class="space-y-2">
+                <a href="#" class="block text-sm opacity-60 hover:opacity-100">Features</a>
+                <a href="#" class="block text-sm opacity-60 hover:opacity-100">Pricing</a>
+                <a href="#" class="block text-sm opacity-60 hover:opacity-100">Changelog</a>
+                <a href="#" class="block text-sm opacity-60 hover:opacity-100">Roadmap</a>
+              </nav>
+            </div>
+            <div data-element-id="footer-company" class="space-y-3">
+              <p class="text-sm font-semibold opacity-80">Company</p>
+              <nav class="space-y-2">
+                <a href="#" class="block text-sm opacity-60 hover:opacity-100">About</a>
+                <a href="#" class="block text-sm opacity-60 hover:opacity-100">Blog</a>
+                <a href="#" class="block text-sm opacity-60 hover:opacity-100">Careers</a>
+                <a href="#" class="block text-sm opacity-60 hover:opacity-100">Contact</a>
+              </nav>
+            </div>
+            <div data-element-id="footer-legal" class="space-y-3">
+              <p class="text-sm font-semibold opacity-80">Legal</p>
+              <nav class="space-y-2">
+                <a href="#" class="block text-sm opacity-60 hover:opacity-100">Privacy Policy</a>
+                <a href="#" class="block text-sm opacity-60 hover:opacity-100">Terms of Service</a>
+                <a href="#" class="block text-sm opacity-60 hover:opacity-100">Cookie Policy</a>
+              </nav>
+            </div>
+          </div>
+          <div data-element-id="footer-bottom" class="mt-8 pt-8 flex items-center justify-between" style="border-top: 1px solid hsla(0,0%,100%,0.1)">
+            <p class="text-sm opacity-50">&copy; 2025 ProductName. All rights reserved.</p>
+            <div class="flex items-center gap-4">
+              <a data-element-id="footer-social-twitter" href="#" class="opacity-60 hover:opacity-100">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
+              </a>
+              <a data-element-id="footer-social-github" href="#" class="opacity-60 hover:opacity-100">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Command Palette (cmdk) — Classic Corporate</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 222 47% 11%;
+      --card: 0 0% 100%;
+      --card-foreground: 222 47% 11%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 222 47% 11%;
+      --primary: 217 87% 17%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 210 40% 96%;
+      --secondary-foreground: 222 47% 11%;
+      --muted: 210 40% 96%;
+      --muted-foreground: 215 16% 47%;
+      --accent: 187 85% 43%;
+      --accent-foreground: 222 47% 11%;
+      --destructive: 0 84% 60%;
+      --destructive-foreground: 0 0% 100%;
+      --border: 214 32% 91%;
+      --input: 214 32% 91%;
+      --ring: 217 87% 17%;
+      --radius: 0.5rem;
+    }
+
+    * {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      border-color: hsl(var(--border));
+    }
+
+    body {
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+    }
+
+    /* Command item hover effects */
+    div[data-element-id="command-item-calendar"]:hover,
+    div[data-element-id="command-item-search"]:hover,
+    div[data-element-id="command-item-calculator"]:hover,
+    div[data-element-id="command-item-profile"]:hover,
+    div[data-element-id="command-item-billing"]:hover,
+    div[data-element-id="command-item-settings"]:hover {
+      background: hsl(var(--secondary));
+      transition: background-color 0.15s ease;
+    }
+
+    /* Command input focus styles */
+    input[data-element-id="command-input"]:focus {
+      outline: none;
+    }
+
+    /* Fade in animation */
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Command dialog shadow on hover */
+    div[data-element-id="command-dialog"] {
+      transition: all 0.2s ease-in-out;
+    }
+
+    div[data-element-id="command-dialog"]:hover {
+      box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-white">
+  <!-- Header with Logo -->
+  <header class="w-full py-6 px-8 border-b border-slate-100 bg-white" data-element-id="page-header-banner">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4" data-element-id="logo-container">
+        <img src="./images/vm-logo.png" alt="Virtual Manager Logo" class="h-12 w-auto" data-element-id="company-logo">
+        <img src="./images/virtual-mgr-text.png" alt="Virtual Manager" class="h-8 w-auto" data-element-id="company-text">
+      </div>
+      <span class="text-sm text-slate-500 font-medium" data-element-id="product-tag">HealthClean™</span>
+    </div>
+  </header>
+
+  <div class="max-w-4xl mx-auto p-8 space-y-12 fade-in">
+    <header data-element-id="page-header">
+      <h1 data-element-id="page-title" class="text-3xl font-bold tracking-tight" style="color: hsl(var(--foreground))">Command Palette (cmdk)</h1>
+      <p data-element-id="page-description" class="mt-2 text-lg" style="color: hsl(var(--muted-foreground))">Quick-access command menus for keyboard-driven navigation.</p>
+    </header>
+
+    <!-- Command Palette -->
+    <section data-element-id="command-palette-section" class="space-y-6">
+      <h2 data-element-id="command-palette-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Command Menu</h2>
+      <div data-element-id="command-dialog" class="max-w-lg mx-auto shadow-lg overflow-hidden" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--popover))">
+        <div data-element-id="command-input-wrapper" class="flex items-center px-3" style="border-bottom: 1px solid hsl(var(--border))">
+          <svg class="w-4 h-4 shrink-0 mr-2" style="color: hsl(var(--muted-foreground))" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          <input data-element-id="command-input" type="text" placeholder="Type a command or search..." class="flex h-11 w-full bg-transparent py-3 text-sm outline-none" style="color: hsl(var(--foreground))" />
+        </div>
+        <div data-element-id="command-list" class="max-h-80 overflow-y-auto p-1">
+          <div data-element-id="command-group-suggestions" class="p-1">
+            <p class="px-2 py-1.5 text-xs font-medium" style="color: hsl(var(--muted-foreground))">Suggestions</p>
+            <div data-element-id="command-item-calendar" class="flex items-center gap-2 px-2 py-1.5 text-sm cursor-pointer" style="color: hsl(var(--popover-foreground)); border-radius: calc(var(--radius) - 2px); background: hsl(var(--accent))">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+              Calendar
+            </div>
+            <div data-element-id="command-item-search" class="flex items-center gap-2 px-2 py-1.5 text-sm cursor-pointer" style="color: hsl(var(--popover-foreground)); border-radius: calc(var(--radius) - 2px)">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              Search Emoji
+            </div>
+            <div data-element-id="command-item-calculator" class="flex items-center gap-2 px-2 py-1.5 text-sm cursor-pointer" style="color: hsl(var(--popover-foreground)); border-radius: calc(var(--radius) - 2px)">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+              Calculator
+            </div>
+          </div>
+          <div class="h-px my-1" style="background: hsl(var(--border))"></div>
+          <div data-element-id="command-group-settings" class="p-1">
+            <p class="px-2 py-1.5 text-xs font-medium" style="color: hsl(var(--muted-foreground))">Settings</p>
+            <div data-element-id="command-item-profile" class="flex items-center gap-2 px-2 py-1.5 text-sm cursor-pointer" style="color: hsl(var(--popover-foreground)); border-radius: calc(var(--radius) - 2px)">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+              Profile
+              <span class="ml-auto text-xs" style="color: hsl(var(--muted-foreground))">⌘P</span>
+            </div>
+            <div data-element-id="command-item-billing" class="flex items-center gap-2 px-2 py-1.5 text-sm cursor-pointer" style="color: hsl(var(--popover-foreground)); border-radius: calc(var(--radius) - 2px)">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+              Billing
+              <span class="ml-auto text-xs" style="color: hsl(var(--muted-foreground))">⌘B</span>
+            </div>
+            <div data-element-id="command-item-settings" class="flex items-center gap-2 px-2 py-1.5 text-sm cursor-pointer" style="color: hsl(var(--popover-foreground)); border-radius: calc(var(--radius) - 2px)">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+              Settings
+              <span class="ml-auto text-xs" style="color: hsl(var(--muted-foreground))">⌘S</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Inline Command -->
+    <section data-element-id="inline-command-section" class="space-y-6">
+      <h2 data-element-id="inline-command-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Keyboard Shortcut Hint</h2>
+      <div class="flex items-center justify-center p-8" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+        <p class="text-sm" style="color: hsl(var(--muted-foreground))">
+          Press
+          <kbd class="pointer-events-none inline-flex h-5 select-none items-center gap-1 px-1.5 font-mono text-[10px] font-medium opacity-100 ml-1 mr-1" style="border: 1px solid hsl(var(--border)); border-radius: 3px; background: hsl(var(--muted)); color: hsl(var(--muted-foreground))">
+            <span class="text-xs">⌘</span>K
+          </kbd>
+          to open the command palette
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Command palette interactivity
+    const commandInput = document.querySelector('[data-element-id="command-input"]');
+    const commandItems = document.querySelectorAll('[data-element-id^="command-item-"]');
+    
+    // Handle item clicks
+    commandItems.forEach(item => {
+      item.addEventListener('click', function() {
+        // Remove active state from all items
+        commandItems.forEach(i => {
+          i.style.background = '';
+          i.style.color = 'hsl(var(--popover-foreground))';
+        });
+        // Add active state to clicked item
+        this.style.background = 'hsl(var(--accent))';
+        this.style.color = 'hsl(var(--accent-foreground))';
+      });
+    });
+
+    // Handle keyboard navigation simulation
+    let selectedIndex = 0;
+    commandInput.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        // Clear current selection
+        commandItems.forEach(i => {
+          i.style.background = '';
+          i.style.color = 'hsl(var(--popover-foreground))';
+        });
+        
+        if (e.key === 'ArrowDown') {
+          selectedIndex = (selectedIndex + 1) % commandItems.length;
+        } else {
+          selectedIndex = (selectedIndex - 1 + commandItems.length) % commandItems.length;
+        }
+        
+        // Apply selection
+        commandItems[selectedIndex].style.background = 'hsl(var(--accent))';
+        commandItems[selectedIndex].style.color = 'hsl(var(--accent-foreground))';
+        commandItems[selectedIndex].scrollIntoView({ block: 'nearest' });
+      }
+    });
+
+    // Focus input on load
+    commandInput.focus();
+  </script>
+</body>
+</html>

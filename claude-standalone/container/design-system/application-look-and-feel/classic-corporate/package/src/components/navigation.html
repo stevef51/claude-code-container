@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navigation — Classic Corporate</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 222 47% 11%;
+      --card: 0 0% 100%;
+      --card-foreground: 222 47% 11%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 222 47% 11%;
+      --primary: 217 87% 17%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 210 40% 96%;
+      --secondary-foreground: 222 47% 11%;
+      --muted: 210 40% 96%;
+      --muted-foreground: 215 16% 47%;
+      --accent: 187 85% 43%;
+      --accent-foreground: 222 47% 11%;
+      --destructive: 0 84% 60%;
+      --destructive-foreground: 0 0% 100%;
+      --border: 214 32% 91%;
+      --input: 214 32% 91%;
+      --ring: 217 87% 17%;
+      --radius: 0.5rem;
+    }
+
+    * {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      border-color: hsl(var(--border));
+    }
+
+    body {
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+    }
+
+    /* Primary button gradient */
+    button[data-element-id="navbar-get-started"],
+    button[data-element-id="pagination-page-1"] {
+      background: linear-gradient(135deg, #052252 0%, #0a3a7a 100%);
+      transition: all 0.2s ease-in-out;
+    }
+
+    button[data-element-id="navbar-get-started"]:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px hsl(217 87% 17% / 0.4);
+    }
+
+    /* Navigation link hover effects */
+    a[data-element-id="navbar-link-home"],
+    a[data-element-id="navbar-link-products"],
+    a[data-element-id="navbar-link-pricing"],
+    a[data-element-id="navbar-link-about"] {
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    a[data-element-id="navbar-link-home"]::after,
+    a[data-element-id="navbar-link-products"]::after,
+    a[data-element-id="navbar-link-pricing"]::after,
+    a[data-element-id="navbar-link-about"]::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: hsl(var(--accent));
+      transition: width 0.2s ease;
+    }
+
+    a[data-element-id="navbar-link-home"]:hover::after,
+    a[data-element-id="navbar-link-products"]:hover::after,
+    a[data-element-id="navbar-link-pricing"]:hover::after,
+    a[data-element-id="navbar-link-about"]:hover::after {
+      width: 100%;
+    }
+
+    a[data-element-id="navbar-link-home"]:hover,
+    a[data-element-id="navbar-link-products"]:hover,
+    a[data-element-id="navbar-link-pricing"]:hover,
+    a[data-element-id="navbar-link-about"]:hover {
+      color: hsl(var(--accent));
+    }
+
+    /* Sidebar navigation hover effects */
+    a[data-element-id="sidebar-item-analytics"]:hover,
+    a[data-element-id="sidebar-item-projects"]:hover,
+    a[data-element-id="sidebar-item-settings"]:hover {
+      background: hsl(var(--secondary));
+      color: hsl(var(--accent));
+    }
+
+    /* Tab hover effects */
+    button[data-element-id="tab-security"]:hover,
+    button[data-element-id="tab-notifications"]:hover,
+    button[data-element-id="tab-billing"]:hover {
+      background: hsl(var(--secondary));
+      color: hsl(var(--accent));
+    }
+
+    /* Pagination button hover effects */
+    button[data-element-id="pagination-page-2"]:hover,
+    button[data-element-id="pagination-page-3"]:hover,
+    button[data-element-id="pagination-page-10"]:hover {
+      background: hsl(var(--secondary));
+      border-color: hsl(var(--accent));
+    }
+
+    button[data-element-id="pagination-prev"]:hover,
+    button[data-element-id="pagination-next"]:hover {
+      background: hsl(var(--secondary));
+      border-color: hsl(var(--accent));
+      color: hsl(var(--accent));
+    }
+
+    /* Breadcrumb hover effects */
+    a[data-element-id="breadcrumb-home"]:hover,
+    a[data-element-id="breadcrumb-products"]:hover,
+    a[data-element-id="breadcrumb-category"]:hover {
+      color: hsl(var(--accent));
+      text-decoration: underline;
+    }
+
+    /* Fade in animation */
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-white">
+  <!-- Header with Logo -->
+  <header class="w-full py-6 px-8 border-b border-slate-100 bg-white" data-element-id="page-header-banner">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4" data-element-id="logo-container">
+        <img src="./images/vm-logo.png" alt="Virtual Manager Logo" class="h-12 w-auto" data-element-id="company-logo">
+        <img src="./images/virtual-mgr-text.png" alt="Virtual Manager" class="h-8 w-auto" data-element-id="company-text">
+      </div>
+      <span class="text-sm text-slate-500 font-medium" data-element-id="product-tag">HealthClean™</span>
+    </div>
+  </header>
+
+  <div class="space-y-12 fade-in">
+    <header data-element-id="page-header" class="max-w-4xl mx-auto px-8 pt-8">
+      <h1 data-element-id="page-title" class="text-3xl font-bold tracking-tight" style="color: hsl(var(--foreground))">Navigation</h1>
+      <p data-element-id="page-description" class="mt-2 text-lg" style="color: hsl(var(--muted-foreground))">Navigation patterns for moving through content and pages.</p>
+    </header>
+
+    <!-- Navbar -->
+    <section data-element-id="navbar-section" class="space-y-4">
+      <h2 data-element-id="navbar-heading" class="text-xl font-semibold pb-2 max-w-4xl mx-auto px-8" style="border-bottom: 1px solid hsl(var(--border))">Navbar</h2>
+      <nav data-element-id="navbar" class="w-full px-6 py-3 flex items-center justify-between" style="background: hsl(var(--background)); border-bottom: 1px solid hsl(var(--border))">
+        <div class="flex items-center gap-8">
+          <a data-element-id="navbar-logo" href="#" class="text-xl font-bold" style="color: hsl(var(--foreground))">Acme Inc</a>
+          <div class="flex items-center gap-6">
+            <a data-element-id="navbar-link-home" href="#" class="text-sm font-medium" style="color: hsl(var(--foreground))">Home</a>
+            <a data-element-id="navbar-link-products" href="#" class="text-sm font-medium" style="color: hsl(var(--muted-foreground))">Products</a>
+            <a data-element-id="navbar-link-pricing" href="#" class="text-sm font-medium" style="color: hsl(var(--muted-foreground))">Pricing</a>
+            <a data-element-id="navbar-link-about" href="#" class="text-sm font-medium" style="color: hsl(var(--muted-foreground))">About</a>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button data-element-id="navbar-search" class="inline-flex items-center justify-center h-10 w-10" style="color: hsl(var(--muted-foreground)); border-radius: var(--radius)">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </button>
+          <button data-element-id="navbar-sign-in" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 py-2" style="color: hsl(var(--foreground)); border-radius: var(--radius)">Sign in</button>
+          <button data-element-id="navbar-get-started" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 py-2" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">Get Started</button>
+        </div>
+      </nav>
+    </section>
+
+    <!-- Sidebar -->
+    <section data-element-id="sidebar-section" class="space-y-4 max-w-4xl mx-auto px-8">
+      <h2 data-element-id="sidebar-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Sidebar</h2>
+      <div class="flex gap-0 overflow-hidden" style="height: 400px; border: 1px solid hsl(var(--border)); border-radius: var(--radius)">
+        <aside data-element-id="sidebar" class="w-56 flex flex-col" style="background: hsl(var(--muted)); border-right: 1px solid hsl(var(--border))">
+          <div data-element-id="sidebar-header" class="p-4" style="border-bottom: 1px solid hsl(var(--border))">
+            <p class="text-sm font-semibold" style="color: hsl(var(--foreground))">Dashboard</p>
+          </div>
+          <nav class="flex-1 p-2 space-y-1">
+            <a data-element-id="sidebar-item-overview" href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium" style="background: hsl(var(--accent)); color: hsl(var(--accent-foreground)); border-radius: var(--radius)">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+              Overview
+            </a>
+            <a data-element-id="sidebar-item-analytics" href="#" class="flex items-center gap-3 px-3 py-2 text-sm" style="color: hsl(var(--muted-foreground)); border-radius: var(--radius)">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+              Analytics
+            </a>
+            <a data-element-id="sidebar-item-projects" href="#" class="flex items-center gap-3 px-3 py-2 text-sm" style="color: hsl(var(--muted-foreground)); border-radius: var(--radius)">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
+              Projects
+            </a>
+            <a data-element-id="sidebar-item-settings" href="#" class="flex items-center gap-3 px-3 py-2 text-sm" style="color: hsl(var(--muted-foreground)); border-radius: var(--radius)">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+              Settings
+            </a>
+          </nav>
+          <div data-element-id="sidebar-footer" class="p-4" style="border-top: 1px solid hsl(var(--border))">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium" style="background: hsl(var(--muted)); color: hsl(var(--muted-foreground)); border: 1px solid hsl(var(--border))">JD</div>
+              <div>
+                <p class="text-sm font-medium" style="color: hsl(var(--foreground))">Jane Doe</p>
+                <p class="text-xs" style="color: hsl(var(--muted-foreground))">jane@example.com</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+        <main data-element-id="sidebar-content" class="flex-1 p-6" style="background: hsl(var(--background))">
+          <p class="text-sm" style="color: hsl(var(--muted-foreground))">Main content area</p>
+        </main>
+      </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <section data-element-id="breadcrumb-section" class="space-y-4 max-w-4xl mx-auto px-8">
+      <h2 data-element-id="breadcrumb-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Breadcrumb</h2>
+      <nav data-element-id="breadcrumb" class="flex items-center gap-2 text-sm">
+        <a data-element-id="breadcrumb-home" href="#" style="color: hsl(var(--muted-foreground))">Home</a>
+        <svg class="h-4 w-4" style="color: hsl(var(--muted-foreground))" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        <a data-element-id="breadcrumb-products" href="#" style="color: hsl(var(--muted-foreground))">Products</a>
+        <svg class="h-4 w-4" style="color: hsl(var(--muted-foreground))" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        <a data-element-id="breadcrumb-category" href="#" style="color: hsl(var(--muted-foreground))">Electronics</a>
+        <svg class="h-4 w-4" style="color: hsl(var(--muted-foreground))" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        <span data-element-id="breadcrumb-current" class="font-medium" style="color: hsl(var(--foreground))">Wireless Headphones</span>
+      </nav>
+    </section>
+
+    <!-- Tabs -->
+    <section data-element-id="tabs-section" class="space-y-4 max-w-4xl mx-auto px-8">
+      <h2 data-element-id="tabs-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Tabs</h2>
+      <div data-element-id="tabs-container">
+        <div data-element-id="tabs-list" class="inline-flex h-10 items-center justify-center p-1" role="tablist" style="background: hsl(var(--muted)); border-radius: var(--radius)">
+          <button data-element-id="tab-general" role="tab" aria-selected="true" class="inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium shadow-sm" style="background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: calc(var(--radius) - 2px)">General</button>
+          <button data-element-id="tab-security" role="tab" aria-selected="false" class="inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium" style="color: hsl(var(--muted-foreground)); border-radius: calc(var(--radius) - 2px)">Security</button>
+          <button data-element-id="tab-notifications" role="tab" aria-selected="false" class="inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium" style="color: hsl(var(--muted-foreground)); border-radius: calc(var(--radius) - 2px)">Notifications</button>
+          <button data-element-id="tab-billing" role="tab" aria-selected="false" class="inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium" style="color: hsl(var(--muted-foreground)); border-radius: calc(var(--radius) - 2px)">Billing</button>
+        </div>
+        <div data-element-id="tab-panel-general" class="mt-2 p-4 text-sm" style="color: hsl(var(--muted-foreground)); border: 1px solid hsl(var(--border)); border-radius: var(--radius)">
+          <p>Manage your account settings and preferences.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pagination -->
+    <section data-element-id="pagination-section" class="space-y-4 max-w-4xl mx-auto px-8 pb-8">
+      <h2 data-element-id="pagination-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Pagination</h2>
+      <nav data-element-id="pagination" class="flex items-center gap-1">
+        <button data-element-id="pagination-prev" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 py-2 gap-1" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--muted-foreground)); border-radius: var(--radius)">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+          Previous
+        </button>
+        <button data-element-id="pagination-page-1" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 w-10" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">1</button>
+        <button data-element-id="pagination-page-2" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 w-10" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">2</button>
+        <button data-element-id="pagination-page-3" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 w-10" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">3</button>
+        <span data-element-id="pagination-ellipsis" class="flex h-10 w-10 items-center justify-center" style="color: hsl(var(--muted-foreground))">...</span>
+        <button data-element-id="pagination-page-10" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 w-10" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">10</button>
+        <button data-element-id="pagination-next" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 py-2 gap-1" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--muted-foreground)); border-radius: var(--radius)">
+          Next
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+      </nav>
+    </section>
+  </div>
+</body>
+</html>

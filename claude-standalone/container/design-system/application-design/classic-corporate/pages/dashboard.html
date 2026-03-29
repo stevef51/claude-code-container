@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealthClean - Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 222 47% 11%;
+      --card: 0 0% 100%;
+      --card-foreground: 222 47% 11%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 222 47% 11%;
+      --primary: 217 87% 17%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 210 40% 96%;
+      --secondary-foreground: 222 47% 11%;
+      --muted: 210 40% 96%;
+      --muted-foreground: 215 16% 47%;
+      --accent: 187 85% 43%;
+      --accent-foreground: 222 47% 11%;
+      --destructive: 0 84% 60%;
+      --destructive-foreground: 0 0% 100%;
+      --border: 214 32% 91%;
+      --input: 214 32% 91%;
+      --ring: 217 87% 17%;
+      --radius: 0.5rem;
+    }
+
+    * {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    .nav-link {
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: hsl(var(--accent));
+      transition: width 0.2s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .metric-card {
+      transition: all 0.2s ease-in-out;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .primary-button {
+      background: linear-gradient(135deg, #052252 0%, #0a3a7a 100%);
+      transition: all 0.2s ease-in-out;
+    }
+
+    .primary-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px hsl(217 87% 17% / 0.4);
+    }
+
+    .status-badge {
+      transition: all 0.2s ease;
+    }
+
+    .table-row {
+      transition: background-color 0.15s ease;
+    }
+
+    .table-row:hover {
+      background-color: hsl(210 40% 96% / 0.5);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .slide-up {
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .chart-bar {
+      transition: height 0.6s ease-out;
+    }
+
+    .progress-ring-circle {
+      transition: stroke-dashoffset 0.6s ease-out;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-50" data-element-id="dashboard-page">
+  
+  <!-- Navigation Header -->
+  <header class="w-full bg-white border-b border-slate-200 sticky top-0 z-50" data-element-id="main-header">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo Section -->
+        <div class="flex items-center gap-3" data-element-id="header-logo">
+          <img src="./images/vm-logo.png" alt="Virtual Manager Logo" class="h-10 w-auto" data-element-id="company-logo">
+          <img src="./images/virtual-mgr-text.png" alt="Virtual Manager" class="h-6 w-auto" data-element-id="company-text">
+          <span class="text-slate-300 mx-2">|</span>
+          <span class="text-sm font-medium text-slate-600" data-element-id="product-name">HealthClean™</span>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="hidden md:flex items-center gap-8" data-element-id="main-nav">
+          <a href="#" class="nav-link active text-sm font-medium text-slate-900" data-element-id="nav-dashboard">Dashboard</a>
+          <a href="#" class="nav-link text-sm font-medium text-slate-500 hover:text-slate-900" data-element-id="nav-tasks">Tasks</a>
+          <a href="#" class="nav-link text-sm font-medium text-slate-500 hover:text-slate-900" data-element-id="nav-staff">Staff</a>
+          <a href="#" class="nav-link text-sm font-medium text-slate-500 hover:text-slate-900" data-element-id="nav-scheduling">Scheduling</a>
+          <a href="#" class="nav-link text-sm font-medium text-slate-500 hover:text-slate-900" data-element-id="nav-reports">Reports</a>
+        </nav>
+
+        <!-- User Section -->
+        <div class="flex items-center gap-4" data-element-id="user-section">
+          <button class="p-2 text-slate-400 hover:text-slate-600 transition-colors" data-element-id="notifications-btn">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+            </svg>
+          </button>
+          <div class="flex items-center gap-3 pl-4 border-l border-slate-200" data-element-id="user-profile">
+            <div class="text-right hidden sm:block">
+              <p class="text-sm font-medium text-slate-900" data-element-id="user-name">Sarah Mitchell</p>
+              <p class="text-xs text-slate-500" data-element-id="user-role">EVS Manager</p>
+            </div>
+            <div class="h-9 w-9 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white text-sm font-semibold" data-element-id="user-avatar">
+              SM
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" data-element-id="dashboard-content">
+    
+    <!-- Welcome Section -->
+    <div class="mb-8 fade-in" data-element-id="welcome-section">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-semibold text-slate-900" data-element-id="welcome-title">Operations Dashboard</h1>
+          <p class="mt-1 text-sm text-slate-500" data-element-id="welcome-subtitle">Real-time overview of your EVS department performance</p>
+        </div>
+        <div class="flex items-center gap-3" data-element-id="action-buttons">
+          <button class="px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors" data-element-id="export-btn">
+            Export Data
+          </button>
+          <button class="primary-button px-4 py-2 text-sm font-medium text-white rounded-lg" data-element-id="new-task-btn">
+            + New Task
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metrics Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 slide-up" data-element-id="metrics-grid">
+      
+      <!-- Metric Card 1 -->
+      <div class="metric-card bg-white rounded-xl shadow-sm border border-slate-200 p-6" data-element-id="metric-active-tasks">
+        <div class="flex items-center justify-between mb-4">
+          <div class="p-2 bg-blue-50 rounded-lg" data-element-id="metric-icon-1">
+            <svg class="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+            </svg>
+          </div>
+          <span class="status-badge text-xs font-medium text-green-700 bg-green-100 px-2 py-1 rounded-full" data-element-id="metric-trend-1">+12%</span>
+        </div>
+        <p class="text-sm font-medium text-slate-600" data-element-id="metric-label-1">Active Tasks</p>
+        <p class="text-2xl font-semibold text-slate-900 mt-1" data-element-id="metric-value-1">47</p>
+        <p class="text-xs text-slate-400 mt-2" data-element-id="metric-desc-1">12 completed today</p>
+      </div>
+
+      <!-- Metric Card 2 -->
+      <div class="metric-card bg-white rounded-xl shadow-sm border border-slate-200 p-6" data-element-id="metric-staff-on-duty">
+        <div class="flex items-center justify-between mb-4">
+          <div class="p-2 bg-cyan-50 rounded-lg" data-element-id="metric-icon-2">
+            <svg class="h-5 w-5 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+          </div>
+          <span class="status-badge text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded-full" data-element-id="metric-trend-2">On Schedule</span>
+        </div>
+        <p class="text-sm font-medium text-slate-600" data-element-id="metric-label-2">Staff on Duty</p>
+        <p class="text-2xl font-semibold text-slate-900 mt-1" data-element-id="metric-value-2">24/28</p>
+        <p class="text-xs text-slate-400 mt-2" data-element-id="metric-desc-2">4 on break, 2 off duty</p>
+      </div>
+
+      <!-- Metric Card 3 -->
+      <div class="metric-card bg-white rounded-xl shadow-sm border border-slate-200 p-6" data-element-id="metric-avg-completion">
+        <div class="flex items-center justify-between mb-4">
+          <div class="p-2 bg-green-50 rounded-lg" data-element-id="metric-icon-3">
+            <svg class="h-5 w-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <span class="status-badge text-xs font-medium text-green-700 bg-green-100 px-2 py-1 rounded-full" data-element-id="metric-trend-3">-8%</span>
+        </div>
+        <p class="text-sm font-medium text-slate-600" data-element-id="metric-label-3">Avg. Completion Time</p>
+        <p class="text-2xl font-semibold text-slate-900 mt-1" data-element-id="metric-value-3">18.5 min</p>
+        <p class="text-xs text-slate-400 mt-2" data-element-id="metric-desc-3">Target: 20 min</p>
+      </div>
+
+      <!-- Metric Card 4 -->
+      <div class="metric-card bg-white rounded-xl shadow-sm border border-slate-200 p-6" data-element-id="metric-compliance">
+        <div class="flex items-center justify-between mb-4">
+          <div class="p-2 bg-indigo-50 rounded-lg" data-element-id="metric-icon-4">
+            <svg class="h-5 w-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <span class="status-badge text-xs font-medium text-green-700 bg-green-100 px-2 py-1 rounded-full" data-element-id="metric-trend-4">98.2%</span>
+        </div>
+        <p class="text-sm font-medium text-slate-600" data-element-id="metric-label-4">Compliance Rate</p>
+        <p class="text-2xl font-semibold text-slate-900 mt-1" data-element-id="metric-value-4">Excellent</p>
+        <p class="text-xs text-slate-400 mt-2" data-element-id="metric-desc-4">Above hospital target</p>
+      </div>
+    </div>
+
+    <!-- Charts and Tables Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8" data-element-id="charts-section">
+      
+      <!-- Task Completion Chart -->
+      <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-slate-200 p-6 slide-up" data-element-id="task-chart-card" style="animation-delay: 0.1s;">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h3 class="text-lg font-semibold text-slate-900" data-element-id="chart-title">Task Completion Overview</h3>
+            <p class="text-sm text-slate-500" data-element-id="chart-subtitle">Daily task volume vs completion rate</p>
+          </div>
+          <select class="text-sm border border-slate-300 rounded-lg px-3 py-1.5 text-slate-600 bg-white focus:outline-none focus:border-cyan-500" data-element-id="chart-period">
+            <option>Last 7 Days</option>
+            <option>Last 30 Days</option>
+            <option>This Month</option>
+          </select>
+        </div>
+        
+        <!-- Bar Chart -->
+        <div class="h-64 flex items-end justify-between gap-3 px-2" data-element-id="bar-chart">
+          <div class="flex flex-col items-center gap-2 flex-1">
+            <div class="w-full flex gap-1">
+              <div class="chart-bar flex-1 bg-blue-200 rounded-t" style="height: 120px;" data-element-id="bar-mon-1"></div>
+              <div class="chart-bar flex-1 bg-blue-600 rounded-t" style="height: 100px;" data-element-id="bar-mon-2"></div>
+            </div>
+            <span class="text-xs text-slate-500">Mon</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 flex-1">
+            <div class="w-full flex gap-1">
+              <div class="chart-bar flex-1 bg-blue-200 rounded-t" style="height: 140px;" data-element-id="bar-tue-1"></div>
+              <div class="chart-bar flex-1 bg-blue-600 rounded-t" style="height: 130px;" data-element-id="bar-tue-2"></div>
+            </div>
+            <span class="text-xs text-slate-500">Tue</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 flex-1">
+            <div class="w-full flex gap-1">
+              <div class="chart-bar flex-1 bg-blue-200 rounded-t" style="height: 110px;" data-element-id="bar-wed-1"></div>
+              <div class="chart-bar flex-1 bg-blue-600 rounded-t" style="height: 105px;" data-element-id="bar-wed-2"></div>
+            </div>
+            <span class="text-xs text-slate-500">Wed</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 flex-1">
+            <div class="w-full flex gap-1">
+              <div class="chart-bar flex-1 bg-blue-200 rounded-t" style="height: 160px;" data-element-id="bar-thu-1"></div>
+              <div class="chart-bar flex-1 bg-blue-600 rounded-t" style="height: 145px;" data-element-id="bar-thu-2"></div>
+            </div>
+            <span class="text-xs text-slate-500">Thu</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 flex-1">
+            <div class="w-full flex gap-1">
+              <div class="chart-bar flex-1 bg-blue-200 rounded-t" style="height: 135px;" data-element-id="bar-fri-1"></div>
+              <div class="chart-bar flex-1 bg-blue-600 rounded-t" style="height: 128px;" data-element-id="bar-fri-2"></div>
+            </div>
+            <span class="text-xs text-slate-500">Fri</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 flex-1">
+            <div class="w-full flex gap-1">
+              <div class="chart-bar flex-1 bg-blue-200 rounded-t" style="height: 90px;" data-element-id="bar-sat-1"></div>
+              <div class="chart-bar flex-1 bg-blue-600 rounded-t" style="height: 85px;" data-element-id="bar-sat-2"></div>
+            </div>
+            <span class="text-xs text-slate-500">Sat</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 flex-1">
+            <div class="w-full flex gap-1">
+              <div class="chart-bar flex-1 bg-blue-200 rounded-t" style="height: 75px;" data-element-id="bar-sun-1"></div>
+              <div class="chart-bar flex-1 bg-blue-600 rounded-t" style="height: 70px;" data-element-id="bar-sun-2"></div>
+            </div>
+            <span class="text-xs text-slate-500">Sun</span>
+          </div>
+        </div>
+        
+        <div class="flex items-center justify-center gap-6 mt-4 pt-4 border-t border-slate-100" data-element-id="chart-legend">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 bg-blue-200 rounded" data-element-id="legend-1"></div>
+            <span class="text-xs text-slate-600">Tasks Assigned</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 bg-blue-600 rounded" data-element-id="legend-2"></div>
+            <span class="text-xs text-slate-600">Tasks Completed</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Staff Utilization -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 slide-up" data-element-id="utilization-card" style="animation-delay: 0.2s;">
+        <div class="mb-6">
+          <h3 class="text-lg font-semibold text-slate-900" data-element-id="util-title">Staff Utilization</h3>
+          <p class="text-sm text-slate-500" data-element-id="util-subtitle">Current shift efficiency</p>
+        </div>
+        
+        <div class="space-y-6">
+          <!-- Utilization Item 1 -->
+          <div data-element-id="util-item-1">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-medium text-slate-700" data-element-id="util-label-1">Day Shift</span>
+              <span class="text-sm font-semibold text-slate-900" data-element-id="util-value-1">87%</span>
+            </div>
+            <div class="h-2 bg-slate-100 rounded-full overflow-hidden" data-element-id="util-bar-bg-1">
+              <div class="h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style="width: 87%;" data-element-id="util-bar-1"></div>
+            </div>
+          </div>
+          
+          <!-- Utilization Item 2 -->
+          <div data-element-id="util-item-2">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-medium text-slate-700" data-element-id="util-label-2">Evening Shift</span>
+              <span class="text-sm font-semibold text-slate-900" data-element-id="util-value-2">92%</span>
+            </div>
+            <div class="h-2 bg-slate-100 rounded-full overflow-hidden" data-element-id="util-bar-bg-2">
+              <div class="h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style="width: 92%;" data-element-id="util-bar-2"></div>
+            </div>
+          </div>
+          
+          <!-- Utilization Item 3 -->
+          <div data-element-id="util-item-3">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-medium text-slate-700" data-element-id="util-label-3">Night Shift</span>
+              <span class="text-sm font-semibold text-slate-900" data-element-id="util-value-3">76%</span>
+            </div>
+            <div class="h-2 bg-slate-100 rounded-full overflow-hidden" data-element-id="util-bar-bg-3">
+              <div class="h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style="width: 76%;" data-element-id="util-bar-3"></div>
+            </div>
+          </div>
+          
+          <!-- Utilization Item 4 -->
+          <div data-element-id="util-item-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-medium text-slate-700" data-element-id="util-label-4">Weekend Coverage</span>
+              <span class="text-sm font-semibold text-slate-900" data-element-id="util-value-4">94%</span>
+            </div>
+            <div class="h-2 bg-slate-100 rounded-full overflow-hidden" data-element-id="util-bar-bg-4">
+              <div class="h-full bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full" style="width: 94%;" data-element-id="util-bar-4"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-6 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3" data-element-id="top-performer">
+            <div class="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white text-sm font-semibold">JD</div>
+            <div>
+              <p class="text-sm font-medium text-slate-900">Top Performer</p>
+              <p class="text-xs text-slate-500">Jane Doe • 14 tasks today</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Tasks Table -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden slide-up" data-element-id="tasks-table-card" style="animation-delay: 0.3s;">
+      <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between" data-element-id="table-header">
+        <div>
+          <h3 class="text-lg font-semibold text-slate-900" data-element-id="table-title">Active Tasks</h3>
+          <p class="text-sm text-slate-500" data-element-id="table-subtitle">Current shift assignments</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <input type="text" placeholder="Search tasks..." class="px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:border-cyan-500 w-48" data-element-id="table-search">
+          <button class="p-1.5 text-slate-400 hover:text-slate-600 transition-colors" data-element-id="table-filter">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table class="w-full" data-element-id="tasks-table">
+          <thead class="bg-slate-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider" data-element-id="th-task">Task</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider" data-element-id="th-location">Location</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider" data-element-id="th-assigned">Assigned To</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider" data-element-id="th-priority">Priority</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider" data-element-id="th-status">Status</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider" data-element-id="th-time">Est. Time</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200">
+            <tr class="table-row" data-element-id="task-row-1">
+              <td class="px-6 py-4" data-element-id="task-cell-1">
+                <div class="flex items-center">
+                  <div class="h-8 w-8 rounded-lg bg-blue-100 flex items-center justify-center mr-3">
+                    <svg class="h-4 w-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium text-slate-900">Room 304 Discharge Clean</p>
+                    <p class="text-xs text-slate-500">Standard terminal clean</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 text-sm text-slate-600" data-element-id="location-cell-1">Medical Ward - 3rd Floor</td>
+              <td class="px-6 py-4" data-element-id="assigned-cell-1">
+                <div class="flex items-center">
+                  <div class="h-6 w-6 rounded-full bg-slate-200 flex items-center justify-center text-xs font-medium text-slate-600 mr-2">MJ</div>
+                  <span class="text-sm text-slate-700">Maria Johnson</span>
+                </div>
+              </td>
+              <td class="px-6 py-4" data-element-id="priority-cell-1">
+                <span class="px-2 py-1 text-xs font-medium text-red-700 bg-red-100 rounded-full">High</span>
+              </td>
+              <td class="px-6 py-4" data-element-id="status-cell-1">
+                <span class="flex items-center text-sm text-slate-700">
+                  <span class="h-2 w-2 bg-green-500 rounded-full mr-2"></span>
+                  In Progress
+                </span>
+              </td>
+              <td class="px-6 py-4 text-sm text-slate-600" data-element-id="time-cell-1">25 min</td>
+            </tr>
+            
+            <tr class="table-row" data-element-id="task-row-2">
+              <td class="px-6 py-4" data-element-id="task-cell-2">
+                <div class="flex items-center">
+                  <div class="h-8 w-8 rounded-lg bg-cyan-100 flex items-center justify-center mr-3">
+                    <svg class="h-4 w-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium text-slate-900">OR 2 Terminal Clean</p>
+                    <p class="text-xs text-slate-500">Post-surgery deep clean</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 text-sm text-slate-600" data-element-id="location-cell-2">Surgical Suite - Ground</td>
+              <td class="px-6 py-4" data-element-id="assigned-cell-2">
+                <div class="flex items-center">
+                  <div class="h-6 w-6 rounded-full bg-slate-200 flex items-center justify-center text-xs font-medium text-slate-600 mr-2">RL</div>
+                  <span class="text-sm text-slate-700">Robert Lee</span>
+                </div>
+              </td>
+              <td class="px-6 py-4" data-element-id="priority-cell-2">
+                <span class="px-2 py-1 text-xs font-medium text-red-700 bg-red-100 rounded-full">Critical</span>
+              </td>
+              <td class="px-6 py-4" data-element-id="status-cell-2">
+                <span class="flex items-center text-sm text-slate-700">
+                  <span class="h-2 w-2 bg-yellow-500 rounded-full mr-2"></span>
+                  Pending
+                </span>
+              </td>
+              <td class="px-6 py-4 text-sm text-slate-600" data-element-id="time-cell-2">45 min</td>
+            </tr>
+            
+            <tr class="table-row" data-element-id="task-row-3">
+              <td class="px-6 py-4" data-element-id="task-cell-3">
+                <div class="flex items-center">
+                  <div class="h-8 w-8 rounded-lg bg-green-100 flex items-center justify-center mr-3">
+                    <svg class="h-4 w-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium text-slate-900">ICU Daily Maintenance</p>
+                    <p class="text-xs text-slate-500">Routine cleaning protocol</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 text-sm text-slate-600" data-element-id="location-cell-3">ICU - 2nd Floor</td>
+              <td class="px-6 py-4" data-element-id="assigned-cell-3">
+                <div class="flex items-center">
+                  <div class="h-6 w-6 rounded-full bg-slate-200 flex items-center justify-center text-xs font-medium text-slate-600 mr-2">DW</div>
+                  <span class="text-sm text-slate-700">David Wilson</span>
+                </div>
+              </td>
+              <td class="px-6 py-4" data-element-id="priority-cell-3">
+                <span class="px-2 py-1 text-xs font-medium text-blue-700 bg-blue-100 rounded-full">Normal</span>
+              </td>
+              <td class="px-6 py-4" data-element-id="status-cell-3">
+                <span class="flex items-center text-sm text-slate-700">
+                  <span class="h-2 w-2 bg-blue-500 rounded-full mr-2"></span>
+                  Scheduled
+                </span>
+              </td>
+              <td class="px-6 py-4 text-sm text-slate-600" data-element-id="time-cell-3">30 min</td>
+            </tr>
+            
+            <tr class="table-row" data-element-id="task-row-4">
+              <td class="px-6 py-4" data-element-id="task-cell-4">
+                <div class="flex items-center">
+                  <div class="h-8 w-8 rounded-lg bg-purple-100 flex items-center justify-center mr-3">
+                    <svg class="h-4 w-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium text-slate-900">Emergency Spill Response</p>
+                    <p class="text-xs text-slate-500">Biohazard cleanup required</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 text-sm text-slate-600" data-element-id="location-cell-4">Emergency Dept</td>
+              <td class="px-6 py-4" data-element-id="assigned-cell-4">
+                <div class="flex items-center">
+                  <div class="h-6 w-6 rounded-full bg-slate-200 flex items-center justify-center text-xs font-medium text-slate-600 mr-2">KT</div>
+                  <span class="text-sm text-slate-700">Karen Taylor</span>
+                </div>
+              </td>
+              <td class="px-6 py-4" data-element-id="priority-cell-4">
+                <span class="px-2 py-1 text-xs font-medium text-red-700 bg-red-100 rounded-full">Urgent</span>
+              </td>
+              <td class="px-6 py-4" data-element-id="status-cell-4">
+                <span class="flex items-center text-sm text-slate-700">
+                  <span class="h-2 w-2 bg-green-500 rounded-full mr-2"></span>
+                  In Progress
+                </span>
+              </td>
+              <td class="px-6 py-4 text-sm text-slate-600" data-element-id="time-cell-4">15 min</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="px-6 py-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between" data-element-id="table-footer">
+        <p class="text-sm text-slate-500" data-element-id="table-pagination">Showing 4 of 47 active tasks</p>
+        <div class="flex items-center gap-2" data-element-id="pagination-controls">
+          <button class="px-3 py-1 text-sm text-slate-500 hover:text-slate-700 disabled:opacity-50" disabled>Previous</button>
+          <button class="px-3 py-1 text-sm text-slate-600 bg-white border border-slate-300 rounded hover:bg-slate-50">Next</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 mt-12" data-element-id="footer">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2" data-element-id="footer-logo">
+          <img src="./images/vm-logo.png" alt="Virtual Manager" class="h-6 w-auto opacity-60">
+          <span class="text-sm text-slate-400">© 2024 Virtual Manager. All rights reserved.</span>
+        </div>
+        <div class="flex items-center gap-6" data-element-id="footer-links">
+          <a href="#" class="text-sm text-slate-500 hover:text-slate-700">Help Center</a>
+          <a href="#" class="text-sm text-slate-500 hover:text-slate-700">Privacy Policy</a>
+          <a href="#" class="text-sm text-slate-500 hover:text-slate-700">Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

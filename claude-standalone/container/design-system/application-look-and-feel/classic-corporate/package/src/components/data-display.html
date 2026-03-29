@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Display — Classic Corporate</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 222 47% 11%;
+      --card: 0 0% 100%;
+      --card-foreground: 222 47% 11%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 222 47% 11%;
+      --primary: 217 87% 17%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 210 40% 96%;
+      --secondary-foreground: 222 47% 11%;
+      --muted: 210 40% 96%;
+      --muted-foreground: 215 16% 47%;
+      --accent: 187 85% 43%;
+      --accent-foreground: 222 47% 11%;
+      --destructive: 0 84% 60%;
+      --destructive-foreground: 0 0% 100%;
+      --border: 214 32% 91%;
+      --input: 214 32% 91%;
+      --ring: 217 87% 17%;
+      --radius: 0.5rem;
+    }
+
+    * {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      border-color: hsl(var(--border));
+    }
+
+    body {
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+    }
+
+    /* Primary button gradient */
+    button[style*="background: hsl(var(--primary))"] {
+      background: linear-gradient(135deg, #052252 0%, #0a3a7a 100%) !important;
+      transition: all 0.2s ease-in-out;
+    }
+
+    button[style*="background: hsl(var(--primary))"]:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px hsl(217 87% 17% / 0.4);
+    }
+
+    /* Table row hover effects */
+    tr[data-element-id^="table-row"] {
+      transition: background-color 0.15s ease;
+    }
+
+    tr[data-element-id^="table-row"]:hover {
+      background-color: hsl(210 40% 96% / 0.5);
+    }
+
+    /* Card hover effects */
+    div[data-element-id^="card-"] {
+      transition: all 0.2s ease-in-out;
+    }
+
+    div[data-element-id^="card-"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Badge transitions */
+    span[data-element-id^="badge-"] {
+      transition: all 0.2s ease;
+    }
+
+    /* Edit button hover */
+    button[style*="color: hsl(var(--primary))"] {
+      transition: all 0.2s ease;
+    }
+
+    button[style*="color: hsl(var(--primary))"]:hover {
+      color: hsl(var(--accent)) !important;
+    }
+
+    /* Accordion transitions */
+    details > summary {
+      transition: background-color 0.2s ease;
+    }
+
+    details > summary:hover {
+      background-color: hsl(var(--secondary));
+    }
+
+    /* Avatar hover effects */
+    div[data-element-id="avatar-group"] > div {
+      transition: transform 0.2s ease;
+    }
+
+    div[data-element-id="avatar-group"] > div:hover {
+      transform: translateY(-2px);
+      z-index: 10;
+    }
+
+    /* Fade in animation */
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Outline button hover */
+    button[style*="border: 1px solid hsl(var(--input))"]:hover {
+      background: hsl(var(--secondary));
+      border-color: hsl(var(--accent));
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-white">
+  <!-- Header with Logo -->
+  <header class="w-full py-6 px-8 border-b border-slate-100 bg-white" data-element-id="page-header-banner">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4" data-element-id="logo-container">
+        <img src="./images/vm-logo.png" alt="Virtual Manager Logo" class="h-12 w-auto" data-element-id="company-logo">
+        <img src="./images/virtual-mgr-text.png" alt="Virtual Manager" class="h-8 w-auto" data-element-id="company-text">
+      </div>
+      <span class="text-sm text-slate-500 font-medium" data-element-id="product-tag">HealthClean™</span>
+    </div>
+  </header>
+
+  <div class="max-w-4xl mx-auto p-8 space-y-12 fade-in">
+    <header data-element-id="page-header">
+      <h1 data-element-id="page-title" class="text-3xl font-bold tracking-tight" style="color: hsl(var(--foreground))">Data Display</h1>
+      <p data-element-id="page-description" class="mt-2 text-lg" style="color: hsl(var(--muted-foreground))">Components for presenting structured information and data.</p>
+    </header>
+
+    <!-- Table -->
+    <section data-element-id="table-section" class="space-y-6">
+      <h2 data-element-id="table-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Table</h2>
+      <div class="overflow-hidden" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius)">
+        <table data-element-id="data-table" class="w-full text-sm">
+          <thead data-element-id="table-header">
+            <tr style="border-bottom: 1px solid hsl(var(--border))">
+              <th class="h-12 px-4 text-left align-middle font-medium" style="color: hsl(var(--muted-foreground))">Name</th>
+              <th class="h-12 px-4 text-left align-middle font-medium" style="color: hsl(var(--muted-foreground))">Email</th>
+              <th class="h-12 px-4 text-left align-middle font-medium" style="color: hsl(var(--muted-foreground))">Role</th>
+              <th class="h-12 px-4 text-left align-middle font-medium" style="color: hsl(var(--muted-foreground))">Status</th>
+              <th class="h-12 px-4 text-right align-middle font-medium" style="color: hsl(var(--muted-foreground))">Actions</th>
+            </tr>
+          </thead>
+          <tbody data-element-id="table-body">
+            <tr data-element-id="table-row-1" style="border-bottom: 1px solid hsl(var(--border))">
+              <td class="p-4 align-middle font-medium" style="color: hsl(var(--foreground))">Alice Johnson</td>
+              <td class="p-4 align-middle" style="color: hsl(var(--muted-foreground))">alice@example.com</td>
+              <td class="p-4 align-middle" style="color: hsl(var(--foreground))">Admin</td>
+              <td class="p-4 align-middle"><span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold" style="background: hsl(var(--secondary)); color: hsl(var(--secondary-foreground)); border-radius: 9999px">Active</span></td>
+              <td class="p-4 align-middle text-right"><button class="text-sm font-medium" style="color: hsl(var(--primary))">Edit</button></td>
+            </tr>
+            <tr data-element-id="table-row-2" style="border-bottom: 1px solid hsl(var(--border))">
+              <td class="p-4 align-middle font-medium" style="color: hsl(var(--foreground))">Bob Smith</td>
+              <td class="p-4 align-middle" style="color: hsl(var(--muted-foreground))">bob@example.com</td>
+              <td class="p-4 align-middle" style="color: hsl(var(--foreground))">Editor</td>
+              <td class="p-4 align-middle"><span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold" style="background: hsl(var(--secondary)); color: hsl(var(--secondary-foreground)); border-radius: 9999px">Active</span></td>
+              <td class="p-4 align-middle text-right"><button class="text-sm font-medium" style="color: hsl(var(--primary))">Edit</button></td>
+            </tr>
+            <tr data-element-id="table-row-3" style="border-bottom: 1px solid hsl(var(--border))">
+              <td class="p-4 align-middle font-medium" style="color: hsl(var(--foreground))">Carol White</td>
+              <td class="p-4 align-middle" style="color: hsl(var(--muted-foreground))">carol@example.com</td>
+              <td class="p-4 align-middle" style="color: hsl(var(--foreground))">Viewer</td>
+              <td class="p-4 align-middle"><span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold" style="border: 1px solid hsl(var(--border)); color: hsl(var(--foreground)); border-radius: 9999px">Pending</span></td>
+              <td class="p-4 align-middle text-right"><button class="text-sm font-medium" style="color: hsl(var(--primary))">Edit</button></td>
+            </tr>
+            <tr data-element-id="table-row-4">
+              <td class="p-4 align-middle font-medium" style="color: hsl(var(--foreground))">David Brown</td>
+              <td class="p-4 align-middle" style="color: hsl(var(--muted-foreground))">david@example.com</td>
+              <td class="p-4 align-middle" style="color: hsl(var(--foreground))">Editor</td>
+              <td class="p-4 align-middle"><span class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold" style="background: hsl(var(--muted)); color: hsl(var(--muted-foreground)); border-radius: 9999px">Inactive</span></td>
+              <td class="p-4 align-middle text-right"><button class="text-sm font-medium" style="color: hsl(var(--primary))">Edit</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Cards -->
+    <section data-element-id="card-section" class="space-y-6">
+      <h2 data-element-id="card-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Cards</h2>
+      <div class="grid grid-cols-2 gap-6">
+        <div data-element-id="card-basic" class="p-6 space-y-2 shadow-sm" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card)); color: hsl(var(--card-foreground))">
+          <h3 class="text-lg font-semibold leading-none tracking-tight">Basic Card</h3>
+          <p class="text-sm" style="color: hsl(var(--muted-foreground))">A simple card with a title and description. Use cards to group related content and actions.</p>
+          <button class="text-sm font-medium" style="color: hsl(var(--primary))">Learn more</button>
+        </div>
+        <div data-element-id="card-with-image" class="overflow-hidden shadow-sm" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <div class="h-40 bg-gradient-to-br from-blue-400 to-purple-500"></div>
+          <div class="p-6 space-y-2">
+            <h3 class="text-lg font-semibold leading-none tracking-tight" style="color: hsl(var(--card-foreground))">Card with Image</h3>
+            <p class="text-sm" style="color: hsl(var(--muted-foreground))">Cards can feature header images or illustrations to provide visual context.</p>
+          </div>
+        </div>
+        <div data-element-id="card-with-actions" class="p-6 space-y-4 shadow-sm" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <div class="space-y-2">
+            <h3 class="text-lg font-semibold leading-none tracking-tight" style="color: hsl(var(--card-foreground))">Card with Actions</h3>
+            <p class="text-sm" style="color: hsl(var(--muted-foreground))">Include action buttons for common operations like edit, share, or delete.</p>
+          </div>
+          <div class="flex gap-2">
+            <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-9 px-3" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">Save</button>
+            <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-9 px-3" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">Cancel</button>
+          </div>
+        </div>
+        <div data-element-id="card-horizontal" class="flex overflow-hidden shadow-sm" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <div class="w-32 bg-gradient-to-br from-green-400 to-teal-500 flex-shrink-0"></div>
+          <div class="p-4 space-y-1">
+            <h3 class="text-base font-semibold leading-none tracking-tight" style="color: hsl(var(--card-foreground))">Horizontal Card</h3>
+            <p class="text-sm" style="color: hsl(var(--muted-foreground))">A horizontal layout with side image and content.</p>
+            <p class="text-xs" style="color: hsl(var(--muted-foreground))">Updated 2 hours ago</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Badges -->
+    <section data-element-id="badge-section" class="space-y-6">
+      <h2 data-element-id="badge-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Badges</h2>
+      <div class="flex flex-wrap gap-3">
+        <span data-element-id="badge-default" class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold transition-colors" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: 9999px">Default</span>
+        <span data-element-id="badge-secondary" class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold transition-colors" style="background: hsl(var(--secondary)); color: hsl(var(--secondary-foreground)); border-radius: 9999px">Secondary</span>
+        <span data-element-id="badge-destructive" class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold transition-colors" style="background: hsl(var(--destructive)); color: hsl(var(--destructive-foreground)); border-radius: 9999px">Destructive</span>
+        <span data-element-id="badge-outline" class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold transition-colors" style="border: 1px solid hsl(var(--border)); color: hsl(var(--foreground)); border-radius: 9999px">Outline</span>
+        <span data-element-id="badge-success" class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold transition-colors" style="background: hsl(var(--secondary)); color: #16a34a; border-radius: 9999px">Success</span>
+        <span data-element-id="badge-warning" class="inline-flex items-center px-2.5 py-0.5 text-xs font-semibold transition-colors" style="background: hsl(var(--secondary)); color: #ca8a04; border-radius: 9999px">Warning</span>
+      </div>
+    </section>
+
+    <!-- Avatars -->
+    <section data-element-id="avatar-section" class="space-y-6">
+      <h2 data-element-id="avatar-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Avatars</h2>
+      <div class="flex items-center gap-6">
+        <div data-element-id="avatar-with-image" class="relative flex h-12 w-12 shrink-0 overflow-hidden rounded-full" style="background: hsl(var(--muted))">
+          <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-400 to-purple-500">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+          </div>
+        </div>
+        <div data-element-id="avatar-with-fallback-aj" class="relative flex h-12 w-12 shrink-0 overflow-hidden rounded-full items-center justify-center" style="background: hsl(var(--muted))">
+          <span class="text-sm font-medium" style="color: hsl(var(--muted-foreground))">AJ</span>
+        </div>
+        <div data-element-id="avatar-with-fallback-bs" class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full items-center justify-center" style="background: hsl(var(--muted))">
+          <span class="text-sm font-medium" style="color: hsl(var(--muted-foreground))">BS</span>
+        </div>
+        <div data-element-id="avatar-with-fallback-cw" class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-full items-center justify-center" style="background: hsl(var(--muted))">
+          <span class="text-xs font-medium" style="color: hsl(var(--muted-foreground))">CW</span>
+        </div>
+        <div data-element-id="avatar-group" class="flex -space-x-3">
+          <div class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full items-center justify-center" style="background: hsl(var(--muted)); border: 2px solid hsl(var(--background))"><span class="text-xs font-medium" style="color: hsl(var(--muted-foreground))">AJ</span></div>
+          <div class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full items-center justify-center" style="background: hsl(var(--muted)); border: 2px solid hsl(var(--background))"><span class="text-xs font-medium" style="color: hsl(var(--muted-foreground))">BS</span></div>
+          <div class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full items-center justify-center" style="background: hsl(var(--muted)); border: 2px solid hsl(var(--background))"><span class="text-xs font-medium" style="color: hsl(var(--muted-foreground))">CW</span></div>
+          <div class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full items-center justify-center" style="background: hsl(var(--muted)); border: 2px solid hsl(var(--background))"><span class="text-xs font-medium" style="color: hsl(var(--muted-foreground))">+3</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accordion -->
+    <section data-element-id="accordion-section" class="space-y-6">
+      <h2 data-element-id="accordion-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Accordion</h2>
+      <div data-element-id="accordion" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius)">
+        <details data-element-id="accordion-item-1" class="group" open>
+          <summary class="flex items-center justify-between p-4 cursor-pointer text-sm font-medium" style="color: hsl(var(--foreground)); border-bottom: 1px solid hsl(var(--border))">
+            <span>What is your refund policy?</span>
+            <svg class="w-4 h-4 group-open:rotate-180 transition-transform" style="color: hsl(var(--muted-foreground))" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 text-sm" style="color: hsl(var(--muted-foreground))">We offer a full refund within 30 days of purchase. No questions asked. Simply contact our support team to initiate the process.</div>
+        </details>
+        <details data-element-id="accordion-item-2" class="group">
+          <summary class="flex items-center justify-between p-4 cursor-pointer text-sm font-medium" style="color: hsl(var(--foreground)); border-bottom: 1px solid hsl(var(--border))">
+            <span>How do I cancel my subscription?</span>
+            <svg class="w-4 h-4 group-open:rotate-180 transition-transform" style="color: hsl(var(--muted-foreground))" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 text-sm" style="color: hsl(var(--muted-foreground))">You can cancel your subscription at any time from your account settings. Your access will continue until the end of your billing period.</div>
+        </details>
+        <details data-element-id="accordion-item-3" class="group">
+          <summary class="flex items-center justify-between p-4 cursor-pointer text-sm font-medium" style="color: hsl(var(--foreground))">
+            <span>Do you offer a free trial?</span>
+            <svg class="w-4 h-4 group-open:rotate-180 transition-transform" style="color: hsl(var(--muted-foreground))" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 text-sm" style="color: hsl(var(--muted-foreground))">Yes! All new accounts come with a 14-day free trial with full access to all features. No credit card required.</div>
+        </details>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

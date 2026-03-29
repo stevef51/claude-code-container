@@ -1,0 +1,437 @@
+/* ==========================================================
+   Design Theme: Classic Corporate
+   Package variant V1
+   ========================================================== */
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 217 87% 17%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 187 85% 43%;
+  --accent-foreground: 222 47% 11%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 217 87% 17%;
+  --radius: 0.5rem;
+}
+
+
+* { border-color: hsl(var(--border)); }
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* --- Component styles: Form Elements --- */
+input:focus, textarea:focus, select:focus {
+border-color: hsl(var(--accent));
+box-shadow: 0 0 0 3px hsl(var(--accent) / 0.15);
+outline: none;
+}
+button[data-element-id="btn-loading"] {
+background: linear-gradient(135deg, #052252 0%, #0a3a7a 100%);
+transition: all 0.2s ease-in-out;
+}
+button[data-element-id="btn-icon"]:hover {
+transform: translateY(-1px);
+box-shadow: 0 4px 12px hsl(217 87% 17% / 0.4);
+}
+button[data-element-id="btn-secondary"]:hover {
+background: hsl(var(--secondary));
+border-color: hsl(var(--accent));
+}
+button[data-element-id="btn-outline"]:hover {
+background: hsl(var(--secondary));
+border-color: hsl(var(--accent));
+}
+button[data-element-id="btn-ghost"]:hover {
+background: hsl(var(--secondary));
+color: hsl(var(--accent));
+}
+button[role="switch"] {
+transition: background-color 0.2s ease-in-out;
+}
+button[role="switch"] span {
+transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+label[class*="flex items-center gap-3"]:hover {
+cursor: pointer;
+}
+label[class*="flex items-center gap-3"]:hover div[class*="rounded-full"] {
+border-color: hsl(var(--accent));
+}
+div[data-element-id="brightness-slider"]:hover div[class*="block h-5 w-5"] {
+box-shadow: 0 0 0 3px hsl(var(--accent) / 0.3);
+}
+div[data-element-id="role-select"]:hover {
+border-color: hsl(var(--accent));
+cursor: pointer;
+}
+.fade-in {
+animation: fadeIn 0.6s ease-out;
+}
+
+/* --- Component styles: Navigation --- */
+button[data-element-id="pagination-page-1"] {
+background: linear-gradient(135deg, #052252 0%, #0a3a7a 100%);
+transition: all 0.2s ease-in-out;
+}
+button[data-element-id="navbar-get-started"]:hover {
+transform: translateY(-1px);
+box-shadow: 0 4px 12px hsl(217 87% 17% / 0.4);
+}
+a[data-element-id="navbar-link-about"] {
+position: relative;
+transition: color 0.2s ease;
+}
+a[data-element-id="navbar-link-about"]::after {
+content: '';
+position: absolute;
+bottom: -2px;
+left: 0;
+width: 0;
+height: 2px;
+background: hsl(var(--accent));
+transition: width 0.2s ease;
+}
+a[data-element-id="navbar-link-about"]:hover::after {
+width: 100%;
+}
+a[data-element-id="navbar-link-about"]:hover {
+color: hsl(var(--accent));
+}
+a[data-element-id="sidebar-item-settings"]:hover {
+background: hsl(var(--secondary));
+color: hsl(var(--accent));
+}
+button[data-element-id="tab-billing"]:hover {
+background: hsl(var(--secondary));
+color: hsl(var(--accent));
+}
+button[data-element-id="pagination-page-10"]:hover {
+background: hsl(var(--secondary));
+border-color: hsl(var(--accent));
+}
+button[data-element-id="pagination-next"]:hover {
+background: hsl(var(--secondary));
+border-color: hsl(var(--accent));
+color: hsl(var(--accent));
+}
+a[data-element-id="breadcrumb-category"]:hover {
+color: hsl(var(--accent));
+text-decoration: underline;
+}
+
+/* --- Component styles: Notifications & Dialogs --- */
+button[data-element-id="popover-trigger"] {
+background: linear-gradient(135deg, #052252 0%, #0a3a7a 100%);
+transition: all 0.2s ease-in-out;
+}
+button[data-element-id="popover-trigger"]:hover {
+transform: translateY(-1px);
+box-shadow: 0 4px 12px hsl(217 87% 17% / 0.4);
+}
+button[data-element-id="tooltip-trigger-2"] {
+transition: all 0.2s ease-in-out;
+}
+button[data-element-id="tooltip-trigger-2"]:hover {
+background: hsl(var(--secondary));
+border-color: hsl(var(--accent));
+}
+textarea[data-element-id="dialog-form-desc-textarea"]:focus {
+border-color: hsl(var(--accent));
+box-shadow: 0 0 0 3px hsl(var(--accent) / 0.15);
+outline: none;
+}
+button[data-element-id="toast-info-close"] {
+transition: all 0.2s ease;
+padding: 0.25rem;
+border-radius: 0.25rem;
+}
+button[data-element-id="toast-info-close"]:hover {
+background: hsl(var(--secondary));
+color: hsl(var(--foreground));
+}
+div[data-element-id="dialog-form"] {
+box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+div[data-element-id="tooltip-content-2"] {
+animation: fadeIn 0.2s ease-out;
+}
+div[data-element-id="popover-content"] {
+box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+.page-container {
+animation: pageFadeIn 0.6s ease-out;
+}
+div[data-element-id="toast-info"] {
+transition: all 0.2s ease;
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+div[data-element-id="toast-info"]:hover {
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+transform: translateX(2px);
+}
+div[data-element-id="alert-error"] {
+transition: all 0.2s ease;
+}
+div[data-element-id="alert-error"]:hover {
+background: hsl(var(--secondary)) !important;
+}
+div[data-element-id="alert-destructive"] {
+transition: all 0.2s ease;
+}
+div[data-element-id="alert-destructive"]:hover {
+filter: brightness(1.1);
+}
+
+/* --- Component styles: Data Display --- */
+button[style*="background: hsl(var(--primary))"] {
+background: linear-gradient(135deg, #052252 0%, #0a3a7a 100%) !important;
+transition: all 0.2s ease-in-out;
+}
+button[style*="background: hsl(var(--primary))"]:hover {
+transform: translateY(-1px);
+box-shadow: 0 4px 12px hsl(217 87% 17% / 0.4);
+}
+tr[data-element-id^="table-row"] {
+transition: background-color 0.15s ease;
+}
+tr[data-element-id^="table-row"]:hover {
+background-color: hsl(210 40% 96% / 0.5);
+}
+div[data-element-id^="card-"] {
+transition: all 0.2s ease-in-out;
+}
+div[data-element-id^="card-"]:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+}
+span[data-element-id^="badge-"] {
+transition: all 0.2s ease;
+}
+button[style*="color: hsl(var(--primary))"] {
+transition: all 0.2s ease;
+}
+button[style*="color: hsl(var(--primary))"]:hover {
+color: hsl(var(--accent)) !important;
+}
+details > summary {
+transition: background-color 0.2s ease;
+}
+details > summary:hover {
+background-color: hsl(var(--secondary));
+}
+div[data-element-id="avatar-group"] > div {
+transition: transform 0.2s ease;
+}
+div[data-element-id="avatar-group"] > div:hover {
+transform: translateY(-2px);
+z-index: 10;
+}
+button[style*="border: 1px solid hsl(var(--input))"]:hover {
+background: hsl(var(--secondary));
+border-color: hsl(var(--accent));
+}
+
+/* --- Component styles: Layout --- */
+button[data-element-id="hero-cta-primary"] {
+background: linear-gradient(135deg, #052252 0%, #0a3a7a 100%);
+transition: all 0.2s ease-in-out;
+}
+button[data-element-id="hero-cta-primary"]:hover {
+transform: translateY(-1px);
+box-shadow: 0 4px 12px hsl(217 87% 17% / 0.4);
+}
+button[data-element-id="hero-cta-secondary"] {
+transition: all 0.2s ease-in-out;
+}
+button[data-element-id="hero-cta-secondary"]:hover {
+background: hsl(var(--secondary));
+border-color: hsl(var(--accent));
+}
+a[data-element-id="header-nav-blog"] {
+position: relative;
+transition: color 0.2s ease;
+}
+a[data-element-id="header-nav-blog"]::after {
+content: '';
+position: absolute;
+bottom: -2px;
+left: 0;
+width: 0;
+height: 2px;
+background: hsl(var(--accent));
+transition: width 0.2s ease;
+}
+a[data-element-id="header-nav-blog"]:hover::after {
+width: 100%;
+}
+a[data-element-id="header-nav-blog"]:hover {
+color: hsl(var(--accent));
+}
+div[data-element-id="grid-item-3"] {
+transition: all 0.2s ease-in-out;
+}
+div[data-element-id="grid-item-3"]:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+}
+div[data-element-id="content-image"] {
+transition: all 0.2s ease;
+}
+div[data-element-id="content-image"]:hover {
+border-color: hsl(var(--accent));
+}
+footer a:hover {
+opacity: 1 !important;
+color: hsl(var(--accent));
+}
+a[data-element-id="footer-social-github"]:hover {
+opacity: 1 !important;
+color: hsl(var(--accent));
+}
+button[data-element-id="header-login"] {
+transition: all 0.2s ease;
+}
+button[data-element-id="header-login"]:hover {
+background: hsl(var(--secondary));
+color: hsl(var(--accent));
+}
+span[data-element-id="hero-badge"] {
+transition: all 0.2s ease;
+}
+span[data-element-id="hero-badge"]:hover {
+background: hsl(var(--accent) / 0.1);
+color: hsl(var(--accent));
+}
+
+/* --- Component styles: Data Table (TanStack) --- */
+button[data-element-id="toolbar-columns"]:hover {
+background: hsl(var(--secondary));
+border-color: hsl(var(--accent));
+}
+tr[data-element-id^="trow-"] {
+transition: background-color 0.15s ease;
+}
+tr[data-element-id^="trow-"]:hover {
+background-color: hsl(210 40% 96% / 0.5);
+}
+input[data-element-id="toolbar-search"]:focus {
+border-color: hsl(var(--accent));
+box-shadow: 0 0 0 3px hsl(var(--accent) / 0.15);
+outline: none;
+}
+div[data-element-id="table-pagination"] button:hover {
+background: hsl(var(--secondary));
+border-color: hsl(var(--accent));
+}
+th[data-element-id="col-email"]:hover {
+color: hsl(var(--accent));
+}
+tr button:hover {
+background-color: hsl(var(--secondary));
+color: hsl(var(--accent));
+}
+
+/* --- Component styles: Charts (Recharts) --- */
+div[data-element-id="stat-card-3"] {
+transition: all 0.2s ease-in-out;
+}
+div[data-element-id="pie-chart-card"]:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+}
+div[data-element-id="stat-card-3"]:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+}
+div[data-element-id="bar-chart"] > div > div:first-child {
+transition: all 0.6s ease-out;
+background: linear-gradient(180deg, #052252 0%, #0a3a7a 100%);
+}
+div[data-element-id="bar-chart"] > div:hover > div:first-child {
+filter: brightness(1.1);
+box-shadow: 0 4px 12px hsl(217 87% 17% / 0.3);
+}
+div[data-element-id="pie-chart"] svg circle {
+transition: all 0.2s ease;
+}
+div[data-element-id="pie-chart"]:hover svg circle:hover {
+filter: brightness(1.1);
+transform: scale(1.02);
+}
+div[data-element-id="pie-legend"] > div {
+transition: all 0.2s ease;
+}
+div[data-element-id="pie-legend"] > div:hover {
+transform: translateX(4px);
+}
+div[data-element-id="line-chart"] svg polyline[stroke] {
+stroke-dasharray: 1000;
+stroke-dashoffset: 0;
+animation: drawLine 1.5s ease-out;
+}
+
+/* --- Component styles: Command Palette (cmdk) --- */
+div[data-element-id="command-item-settings"]:hover {
+background: hsl(var(--secondary));
+transition: background-color 0.15s ease;
+}
+input[data-element-id="command-input"]:focus {
+outline: none;
+}
+div[data-element-id="command-dialog"] {
+transition: all 0.2s ease-in-out;
+}
+div[data-element-id="command-dialog"]:hover {
+box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* --- Component styles: Toast Notifications (Sonner) --- */
+button[data-element-id="sonner-action"] button:first-child {
+background: linear-gradient(135deg, #052252 0%, #0a3a7a 100%) !important;
+transition: all 0.2s ease-in-out;
+}
+button[data-element-id="sonner-action"] button:first-child:hover {
+transform: translateY(-1px);
+box-shadow: 0 4px 12px hsl(217 87% 17% / 0.4);
+}
+button[style*="border: 1px solid hsl(var(--input))"] {
+transition: all 0.2s ease-in-out;
+}
+div[data-element-id^="sonner-"] {
+transition: all 0.2s ease-in-out;
+}
+div[data-element-id^="sonner-"]:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+}
+div[data-element-id^="pos-"] {
+transition: all 0.2s ease-in-out;
+}
+div[data-element-id^="pos-"]:hover {
+border-color: hsl(var(--accent));
+box-shadow: 0 4px 12px hsl(var(--accent) / 0.15);
+}
+button:contains("Undo") {
+background: hsl(var(--background));
+transition: all 0.2s ease;
+}
+button:contains("Undo"):hover {
+background: hsl(var(--secondary));
+border-color: hsl(var(--accent));
+color: hsl(var(--accent));
+}
+

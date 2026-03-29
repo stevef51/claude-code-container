@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charts (Recharts) — Classic Corporate</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 222 47% 11%;
+      --card: 0 0% 100%;
+      --card-foreground: 222 47% 11%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 222 47% 11%;
+      --primary: 217 87% 17%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 210 40% 96%;
+      --secondary-foreground: 222 47% 11%;
+      --muted: 210 40% 96%;
+      --muted-foreground: 215 16% 47%;
+      --accent: 187 85% 43%;
+      --accent-foreground: 222 47% 11%;
+      --destructive: 0 84% 60%;
+      --destructive-foreground: 0 0% 100%;
+      --border: 214 32% 91%;
+      --input: 214 32% 91%;
+      --ring: 217 87% 17%;
+      --radius: 0.5rem;
+    }
+
+    * {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      border-color: hsl(var(--border));
+    }
+
+    body {
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+    }
+
+    /* Card hover effects */
+    div[data-element-id="bar-chart-card"],
+    div[data-element-id="line-chart-card"],
+    div[data-element-id="pie-chart-card"],
+    div[data-element-id="stat-card-1"],
+    div[data-element-id="stat-card-2"],
+    div[data-element-id="stat-card-3"] {
+      transition: all 0.2s ease-in-out;
+    }
+
+    div[data-element-id="bar-chart-card"]:hover,
+    div[data-element-id="line-chart-card"]:hover,
+    div[data-element-id="pie-chart-card"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Stat card hover effects */
+    div[data-element-id="stat-card-1"]:hover,
+    div[data-element-id="stat-card-2"]:hover,
+    div[data-element-id="stat-card-3"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Bar chart animations */
+    div[data-element-id="bar-chart"] > div > div:first-child {
+      transition: all 0.6s ease-out;
+      background: linear-gradient(180deg, #052252 0%, #0a3a7a 100%);
+    }
+
+    div[data-element-id="bar-chart"] > div:hover > div:first-child {
+      filter: brightness(1.1);
+      box-shadow: 0 4px 12px hsl(217 87% 17% / 0.3);
+    }
+
+    /* Pie chart segment hover */
+    div[data-element-id="pie-chart"] svg circle {
+      transition: all 0.2s ease;
+    }
+
+    div[data-element-id="pie-chart"]:hover svg circle:hover {
+      filter: brightness(1.1);
+      transform: scale(1.02);
+    }
+
+    /* Legend item hover */
+    div[data-element-id="pie-legend"] > div {
+      transition: all 0.2s ease;
+    }
+
+    div[data-element-id="pie-legend"] > div:hover {
+      transform: translateX(4px);
+    }
+
+    /* Fade in animation */
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Line chart animation */
+    @keyframes drawLine {
+      from {
+        stroke-dashoffset: 1000;
+      }
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    div[data-element-id="line-chart"] svg polyline[stroke] {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 0;
+      animation: drawLine 1.5s ease-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-white">
+  <!-- Header with Logo -->
+  <header class="w-full py-6 px-8 border-b border-slate-100 bg-white" data-element-id="page-header-banner">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4" data-element-id="logo-container">
+        <img src="./images/vm-logo.png" alt="Virtual Manager Logo" class="h-12 w-auto" data-element-id="company-logo">
+        <img src="./images/virtual-mgr-text.png" alt="Virtual Manager" class="h-8 w-auto" data-element-id="company-text">
+      </div>
+      <span class="text-sm text-slate-500 font-medium" data-element-id="product-tag">HealthClean™</span>
+    </div>
+  </header>
+
+  <div class="max-w-4xl mx-auto p-8 space-y-12 fade-in">
+    <header data-element-id="page-header">
+      <h1 data-element-id="page-title" class="text-3xl font-bold tracking-tight" style="color: hsl(var(--foreground))">Charts (Recharts)</h1>
+      <p data-element-id="page-description" class="mt-2 text-lg" style="color: hsl(var(--muted-foreground))">Data visualization components for dashboards and reports.</p>
+    </header>
+
+    <!-- Bar Chart -->
+    <section data-element-id="bar-chart-section" class="space-y-6">
+      <h2 data-element-id="bar-chart-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Bar Chart</h2>
+      <div data-element-id="bar-chart-card" class="p-6 shadow-sm" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+        <div class="mb-4">
+          <h3 class="text-lg font-semibold" style="color: hsl(var(--card-foreground))">Monthly Revenue</h3>
+          <p class="text-sm" style="color: hsl(var(--muted-foreground))">Revenue breakdown for the last 6 months</p>
+        </div>
+        <div data-element-id="bar-chart" class="flex items-end gap-4 h-48">
+          <div class="flex-1 flex flex-col items-center gap-1">
+            <div class="w-full rounded-t" style="background: hsl(var(--primary)); height: 60%"></div>
+            <span class="text-xs" style="color: hsl(var(--muted-foreground))">Jan</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-1">
+            <div class="w-full rounded-t" style="background: hsl(var(--primary)); height: 80%"></div>
+            <span class="text-xs" style="color: hsl(var(--muted-foreground))">Feb</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-1">
+            <div class="w-full rounded-t" style="background: hsl(var(--primary)); height: 45%"></div>
+            <span class="text-xs" style="color: hsl(var(--muted-foreground))">Mar</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-1">
+            <div class="w-full rounded-t" style="background: hsl(var(--primary)); height: 90%"></div>
+            <span class="text-xs" style="color: hsl(var(--muted-foreground))">Apr</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-1">
+            <div class="w-full rounded-t" style="background: hsl(var(--primary)); height: 70%"></div>
+            <span class="text-xs" style="color: hsl(var(--muted-foreground))">May</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-1">
+            <div class="w-full rounded-t" style="background: hsl(var(--primary)); height: 100%"></div>
+            <span class="text-xs" style="color: hsl(var(--muted-foreground))">Jun</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Line Chart -->
+    <section data-element-id="line-chart-section" class="space-y-6">
+      <h2 data-element-id="line-chart-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Line Chart</h2>
+      <div data-element-id="line-chart-card" class="p-6 shadow-sm" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+        <div class="mb-4">
+          <h3 class="text-lg font-semibold" style="color: hsl(var(--card-foreground))">User Growth</h3>
+          <p class="text-sm" style="color: hsl(var(--muted-foreground))">Active users over the last 12 weeks</p>
+        </div>
+        <div data-element-id="line-chart" class="h-48 relative">
+          <svg class="w-full h-full" viewBox="0 0 400 160" preserveAspectRatio="none">
+            <polyline fill="none" stroke="hsl(var(--primary))" stroke-width="2" points="0,140 35,120 70,110 105,90 140,95 175,70 210,60 245,45 280,50 315,30 350,20 385,10"></polyline>
+            <polyline fill="url(#gradient)" stroke="none" points="0,140 35,120 70,110 105,90 140,95 175,70 210,60 245,45 280,50 315,30 350,20 385,10 385,160 0,160"></polyline>
+            <defs><linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" style="stop-color: hsl(var(--primary)); stop-opacity: 0.15"></stop><stop offset="100%" style="stop-color: hsl(var(--primary)); stop-opacity: 0"></stop></linearGradient></defs>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pie Chart -->
+    <section data-element-id="pie-chart-section" class="space-y-6">
+      <h2 data-element-id="pie-chart-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Pie Chart</h2>
+      <div data-element-id="pie-chart-card" class="p-6 shadow-sm" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+        <div class="mb-4">
+          <h3 class="text-lg font-semibold" style="color: hsl(var(--card-foreground))">Traffic Sources</h3>
+          <p class="text-sm" style="color: hsl(var(--muted-foreground))">Where your visitors come from</p>
+        </div>
+        <div class="flex items-center gap-8">
+          <div data-element-id="pie-chart" class="w-48 h-48 relative">
+            <svg viewBox="0 0 100 100" class="w-full h-full -rotate-90">
+              <circle cx="50" cy="50" r="40" fill="none" stroke="hsl(var(--primary))" stroke-width="20" stroke-dasharray="100.53 150.79" stroke-dashoffset="0"></circle>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="hsl(var(--secondary))" stroke-width="20" stroke-dasharray="62.83 188.49" stroke-dashoffset="-100.53"></circle>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="hsl(var(--muted))" stroke-width="20" stroke-dasharray="50.26 201.06" stroke-dashoffset="-163.36"></circle>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="hsl(var(--accent))" stroke-width="20" stroke-dasharray="37.7 213.62" stroke-dashoffset="-213.62"></circle>
+            </svg>
+          </div>
+          <div data-element-id="pie-legend" class="space-y-3">
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-sm" style="background: hsl(var(--primary))"></div><span class="text-sm" style="color: hsl(var(--foreground))">Direct — 40%</span></div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-sm" style="background: hsl(var(--secondary))"></div><span class="text-sm" style="color: hsl(var(--foreground))">Organic — 25%</span></div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-sm" style="background: hsl(var(--muted))"></div><span class="text-sm" style="color: hsl(var(--foreground))">Referral — 20%</span></div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-sm" style="background: hsl(var(--accent))"></div><span class="text-sm" style="color: hsl(var(--foreground))">Social — 15%</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stat Cards -->
+    <section data-element-id="stat-cards-section" class="space-y-6">
+      <h2 data-element-id="stat-cards-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Stat Cards</h2>
+      <div class="grid grid-cols-3 gap-6">
+        <div data-element-id="stat-card-1" class="p-6 shadow-sm" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <p class="text-sm font-medium" style="color: hsl(var(--muted-foreground))">Total Revenue</p>
+          <p class="text-2xl font-bold mt-1" style="color: hsl(var(--card-foreground))">$45,231.89</p>
+          <p class="text-xs mt-1" style="color: #16a34a">+20.1% from last month</p>
+        </div>
+        <div data-element-id="stat-card-2" class="p-6 shadow-sm" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <p class="text-sm font-medium" style="color: hsl(var(--muted-foreground))">Subscriptions</p>
+          <p class="text-2xl font-bold mt-1" style="color: hsl(var(--card-foreground))">+2,350</p>
+          <p class="text-xs mt-1" style="color: #16a34a">+180.1% from last month</p>
+        </div>
+        <div data-element-id="stat-card-3" class="p-6 shadow-sm" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <p class="text-sm font-medium" style="color: hsl(var(--muted-foreground))">Active Now</p>
+          <p class="text-2xl font-bold mt-1" style="color: hsl(var(--card-foreground))">+573</p>
+          <p class="text-xs mt-1" style="color: #16a34a">+201 since last hour</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

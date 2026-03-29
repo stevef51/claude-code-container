@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications &amp; Dialogs — Classic Corporate</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 222 47% 11%;
+      --card: 0 0% 100%;
+      --card-foreground: 222 47% 11%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 222 47% 11%;
+      --primary: 217 87% 17%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 210 40% 96%;
+      --secondary-foreground: 222 47% 11%;
+      --muted: 210 40% 96%;
+      --muted-foreground: 215 16% 47%;
+      --accent: 187 85% 43%;
+      --accent-foreground: 222 47% 11%;
+      --destructive: 0 84% 60%;
+      --destructive-foreground: 0 0% 100%;
+      --border: 214 32% 91%;
+      --input: 214 32% 91%;
+      --ring: 217 87% 17%;
+      --radius: 0.5rem;
+    }
+
+    * {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      border-color: hsl(var(--border));
+    }
+
+    body {
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+    }
+
+    /* Primary button gradient */
+    button[data-element-id="dialog-basic-confirm"],
+    button[data-element-id="dialog-form-create"],
+    button[data-element-id="popover-trigger"] {
+      background: linear-gradient(135deg, #052252 0%, #0a3a7a 100%);
+      transition: all 0.2s ease-in-out;
+    }
+
+    button[data-element-id="dialog-basic-confirm"]:hover,
+    button[data-element-id="dialog-form-create"]:hover,
+    button[data-element-id="popover-trigger"]:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px hsl(217 87% 17% / 0.4);
+    }
+
+    /* Secondary/outline button hover */
+    button[data-element-id="dialog-basic-cancel"],
+    button[data-element-id="dialog-form-cancel"],
+    button[data-element-id="tooltip-trigger-1"],
+    button[data-element-id="tooltip-trigger-2"] {
+      transition: all 0.2s ease-in-out;
+    }
+
+    button[data-element-id="dialog-basic-cancel"]:hover,
+    button[data-element-id="dialog-form-cancel"]:hover,
+    button[data-element-id="tooltip-trigger-1"]:hover,
+    button[data-element-id="tooltip-trigger-2"]:hover {
+      background: hsl(var(--secondary));
+      border-color: hsl(var(--accent));
+    }
+
+    /* Input focus styles */
+    input[data-element-id="dialog-form-name-input"]:focus,
+    textarea[data-element-id="dialog-form-desc-textarea"]:focus {
+      border-color: hsl(var(--accent));
+      box-shadow: 0 0 0 3px hsl(var(--accent) / 0.15);
+      outline: none;
+    }
+
+    /* Toast close button hover */
+    button[data-element-id="toast-success-close"],
+    button[data-element-id="toast-error-close"],
+    button[data-element-id="toast-warning-close"],
+    button[data-element-id="toast-info-close"] {
+      transition: all 0.2s ease;
+      padding: 0.25rem;
+      border-radius: 0.25rem;
+    }
+
+    button[data-element-id="toast-success-close"]:hover,
+    button[data-element-id="toast-error-close"]:hover,
+    button[data-element-id="toast-warning-close"]:hover,
+    button[data-element-id="toast-info-close"]:hover {
+      background: hsl(var(--secondary));
+      color: hsl(var(--foreground));
+    }
+
+    /* Dialog card shadow enhancement */
+    div[data-element-id="dialog-basic"],
+    div[data-element-id="dialog-form"] {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Tooltip animation */
+    div[data-element-id="tooltip-content-1"],
+    div[data-element-id="tooltip-content-2"] {
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    /* Popover shadow */
+    div[data-element-id="popover-content"] {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Switch toggle transitions */
+    button[role="switch"] {
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    button[role="switch"] span {
+      transition: transform 0.2s ease-in-out;
+    }
+
+    /* Page fade in */
+    .page-container {
+      animation: pageFadeIn 0.6s ease-out;
+    }
+
+    @keyframes pageFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Toast hover effect */
+    div[data-element-id="toast-success"],
+    div[data-element-id="toast-error"],
+    div[data-element-id="toast-warning"],
+    div[data-element-id="toast-info"] {
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    div[data-element-id="toast-success"]:hover,
+    div[data-element-id="toast-error"]:hover,
+    div[data-element-id="toast-warning"]:hover,
+    div[data-element-id="toast-info"]:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transform: translateX(2px);
+    }
+
+    /* Alert hover effects */
+    div[data-element-id="alert-info"],
+    div[data-element-id="alert-warning"],
+    div[data-element-id="alert-error"] {
+      transition: all 0.2s ease;
+    }
+
+    div[data-element-id="alert-info"]:hover,
+    div[data-element-id="alert-warning"]:hover,
+    div[data-element-id="alert-error"]:hover {
+      background: hsl(var(--secondary)) !important;
+    }
+
+    div[data-element-id="alert-destructive"] {
+      transition: all 0.2s ease;
+    }
+
+    div[data-element-id="alert-destructive"]:hover {
+      filter: brightness(1.1);
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-white">
+  <!-- Header with Logo -->
+  <header class="w-full py-6 px-8 border-b border-slate-100 bg-white" data-element-id="page-header-banner">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4" data-element-id="logo-container">
+        <img src="./images/vm-logo.png" alt="Virtual Manager Logo" class="h-12 w-auto" data-element-id="company-logo">
+        <img src="./images/virtual-mgr-text.png" alt="Virtual Manager" class="h-8 w-auto" data-element-id="company-text">
+      </div>
+      <span class="text-sm text-slate-500 font-medium" data-element-id="product-tag">HealthClean™</span>
+    </div>
+  </header>
+
+  <div class="page-container max-w-4xl mx-auto p-8 space-y-12">
+    <header data-element-id="page-header">
+      <h1 data-element-id="page-title" class="text-3xl font-bold tracking-tight" style="color: hsl(var(--foreground))">Notifications &amp; Dialogs</h1>
+      <p data-element-id="page-description" class="mt-2 text-lg" style="color: hsl(var(--muted-foreground))">Feedback components for user communication and confirmations.</p>
+    </header>
+
+    <!-- Toasts -->
+    <section data-element-id="toast-section" class="space-y-6">
+      <h2 data-element-id="toast-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Toast Notifications</h2>
+      <div class="space-y-3">
+        <div data-element-id="toast-success" class="flex items-center gap-3 p-4" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <svg class="w-5 h-5 flex-shrink-0" style="color: #16a34a" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <div class="flex-1">
+            <p class="text-sm font-medium" style="color: hsl(var(--foreground))">Success</p>
+            <p class="text-sm" style="color: hsl(var(--muted-foreground))">Your changes have been saved successfully.</p>
+          </div>
+          <button data-element-id="toast-success-close" style="color: hsl(var(--muted-foreground))">&times;</button>
+        </div>
+        <div data-element-id="toast-error" class="flex items-center gap-3 p-4" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <svg class="w-5 h-5 flex-shrink-0" style="color: hsl(var(--destructive))" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <div class="flex-1">
+            <p class="text-sm font-medium" style="color: hsl(var(--foreground))">Error</p>
+            <p class="text-sm" style="color: hsl(var(--muted-foreground))">Something went wrong. Please try again later.</p>
+          </div>
+          <button data-element-id="toast-error-close" style="color: hsl(var(--muted-foreground))">&times;</button>
+        </div>
+        <div data-element-id="toast-warning" class="flex items-center gap-3 p-4" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <svg class="w-5 h-5 flex-shrink-0" style="color: #ca8a04" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          <div class="flex-1">
+            <p class="text-sm font-medium" style="color: hsl(var(--foreground))">Warning</p>
+            <p class="text-sm" style="color: hsl(var(--muted-foreground))">Your session will expire in 5 minutes.</p>
+          </div>
+          <button data-element-id="toast-warning-close" style="color: hsl(var(--muted-foreground))">&times;</button>
+        </div>
+        <div data-element-id="toast-info" class="flex items-center gap-3 p-4" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <svg class="w-5 h-5 flex-shrink-0" style="color: #2563eb" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <div class="flex-1">
+            <p class="text-sm font-medium" style="color: hsl(var(--foreground))">Info</p>
+            <p class="text-sm" style="color: hsl(var(--muted-foreground))">A new version is available. Refresh to update.</p>
+          </div>
+          <button data-element-id="toast-info-close" style="color: hsl(var(--muted-foreground))">&times;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Alerts -->
+    <section data-element-id="alert-section" class="space-y-6">
+      <h2 data-element-id="alert-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Inline Alerts</h2>
+      <div class="space-y-3">
+        <div data-element-id="alert-info" class="relative w-full p-4" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--background))">
+          <p class="text-sm font-medium leading-none tracking-tight" style="color: hsl(var(--foreground))">Information</p>
+          <p class="text-sm mt-1" style="color: hsl(var(--muted-foreground))">This feature is currently in beta. Some functionality may change.</p>
+        </div>
+        <div data-element-id="alert-warning" class="relative w-full p-4" style="border: 1px solid #ca8a04; border-radius: var(--radius); background: hsl(var(--background))">
+          <p class="text-sm font-medium leading-none tracking-tight" style="color: #ca8a04">Warning</p>
+          <p class="text-sm mt-1" style="color: hsl(var(--muted-foreground))">You are approaching your storage limit. Consider upgrading your plan.</p>
+        </div>
+        <div data-element-id="alert-error" class="relative w-full p-4" style="border: 1px solid hsl(var(--destructive)); border-radius: var(--radius); background: hsl(var(--background))">
+          <p class="text-sm font-medium leading-none tracking-tight" style="color: hsl(var(--destructive))">Error</p>
+          <p class="text-sm mt-1" style="color: hsl(var(--muted-foreground))">Unable to connect to the server. Check your internet connection.</p>
+        </div>
+        <div data-element-id="alert-destructive" class="relative w-full p-4" style="border: 1px solid hsl(var(--destructive)); border-radius: var(--radius); background: hsl(var(--destructive)); color: hsl(var(--destructive-foreground))">
+          <p class="text-sm font-medium leading-none tracking-tight">Account Suspension</p>
+          <p class="text-sm mt-1 opacity-90">Your account has been flagged for review. Please contact support immediately.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dialog -->
+    <section data-element-id="dialog-section" class="space-y-6">
+      <h2 data-element-id="dialog-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Dialog</h2>
+      <div class="space-y-6">
+        <div data-element-id="dialog-basic" class="max-w-md mx-auto shadow-lg" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <div class="p-6 space-y-4">
+            <h3 data-element-id="dialog-basic-title" class="text-lg font-semibold leading-none tracking-tight" style="color: hsl(var(--card-foreground))">Confirm Action</h3>
+            <p data-element-id="dialog-basic-description" class="text-sm" style="color: hsl(var(--muted-foreground))">Are you sure you want to delete this item? This action cannot be undone.</p>
+            <div class="flex justify-end gap-3">
+              <button data-element-id="dialog-basic-cancel" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 py-2" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">Cancel</button>
+              <button data-element-id="dialog-basic-confirm" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 py-2" style="background: hsl(var(--destructive)); color: hsl(var(--destructive-foreground)); border-radius: var(--radius)">Delete</button>
+            </div>
+          </div>
+        </div>
+        <div data-element-id="dialog-form" class="max-w-md mx-auto shadow-lg" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <div class="p-6 space-y-4">
+            <h3 data-element-id="dialog-form-title" class="text-lg font-semibold leading-none tracking-tight" style="color: hsl(var(--card-foreground))">Create New Project</h3>
+            <div class="space-y-3">
+              <div class="space-y-1">
+                <label data-element-id="dialog-form-name-label" class="text-sm font-medium leading-none" style="color: hsl(var(--foreground))">Project Name</label>
+                <input data-element-id="dialog-form-name-input" type="text" placeholder="My Awesome Project" class="flex h-10 w-full px-3 py-2 text-sm focus-visible:outline-none" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)" />
+              </div>
+              <div class="space-y-1">
+                <label data-element-id="dialog-form-desc-label" class="text-sm font-medium leading-none" style="color: hsl(var(--foreground))">Description</label>
+                <textarea data-element-id="dialog-form-desc-textarea" rows="3" placeholder="Brief description..." class="flex min-h-[80px] w-full px-3 py-2 text-sm focus-visible:outline-none resize-none" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)"></textarea>
+              </div>
+            </div>
+            <div class="flex justify-end gap-3">
+              <button data-element-id="dialog-form-cancel" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 py-2" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">Cancel</button>
+              <button data-element-id="dialog-form-create" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 py-2" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">Create</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Popover -->
+    <section data-element-id="popover-section" class="space-y-6">
+      <h2 data-element-id="popover-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Popover</h2>
+      <div data-element-id="popover-example" class="relative inline-block">
+        <button data-element-id="popover-trigger" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 py-2" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">Open Popover</button>
+        <div data-element-id="popover-content" class="mt-2 w-72 p-4 shadow-md outline-none" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--popover)); color: hsl(var(--popover-foreground))">
+          <h4 class="text-sm font-semibold" style="color: hsl(var(--popover-foreground))">Share Settings</h4>
+          <p class="text-xs mt-1" style="color: hsl(var(--muted-foreground))">Choose who can access this document.</p>
+          <div class="mt-3 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-sm">Public access</span>
+              <button role="switch" aria-checked="false" class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors" style="background: hsl(var(--input))">
+                <span class="pointer-events-none block h-4 w-4 rounded-full shadow-lg transition-transform translate-x-0.5" style="background: hsl(var(--background))"></span>
+              </button>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm">Allow comments</span>
+              <button role="switch" aria-checked="true" class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors" style="background: hsl(var(--primary))">
+                <span class="pointer-events-none block h-4 w-4 rounded-full shadow-lg transition-transform translate-x-4" style="background: hsl(var(--primary-foreground))"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tooltip -->
+    <section data-element-id="tooltip-section" class="space-y-6">
+      <h2 data-element-id="tooltip-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Tooltip</h2>
+      <div class="flex gap-8 items-start">
+        <div data-element-id="tooltip-example-1" class="relative inline-block">
+          <button data-element-id="tooltip-trigger-1" class="inline-flex items-center justify-center h-10 w-10" style="border: 1px solid hsl(var(--input)); border-radius: var(--radius); color: hsl(var(--muted-foreground))">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+          </button>
+          <div data-element-id="tooltip-content-1" class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs whitespace-nowrap overflow-hidden animate-in fade-in-0 zoom-in-95" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">
+            Edit document
+          </div>
+        </div>
+        <div data-element-id="tooltip-example-2" class="relative inline-block">
+          <button data-element-id="tooltip-trigger-2" class="inline-flex items-center justify-center h-10 w-10" style="border: 1px solid hsl(var(--input)); border-radius: var(--radius); color: hsl(var(--muted-foreground))">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+          </button>
+          <div data-element-id="tooltip-content-2" class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs whitespace-nowrap overflow-hidden" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">
+            Delete item
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Toggle switches interactivity
+    document.querySelectorAll('button[role="switch"]').forEach(switchBtn => {
+      switchBtn.addEventListener('click', () => {
+        const isChecked = switchBtn.getAttribute('aria-checked') === 'true';
+        switchBtn.setAttribute('aria-checked', !isChecked);
+        const span = switchBtn.querySelector('span');
+        if (!isChecked) {
+          switchBtn.style.background = 'hsl(var(--primary))';
+          span.style.background = 'hsl(var(--primary-foreground))';
+          span.style.transform = 'translateX(16px)';
+        } else {
+          switchBtn.style.background = 'hsl(var(--input))';
+          span.style.background = 'hsl(var(--background))';
+          span.style.transform = 'translateX(2px)';
+        }
+      });
+    });
+
+    // Close buttons for toasts
+    document.querySelectorAll('[data-element-id^="toast-"][data-element-id$="-close"]').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const toast = this.closest('[data-element-id^="toast-"]');
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          toast.style.display = 'none';
+        }, 200);
+      });
+    });
+  </script>
+</body>
+</html>

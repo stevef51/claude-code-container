@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealthClean - Task Assignment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 222 47% 11%;
+      --card: 0 0% 100%;
+      --card-foreground: 222 47% 11%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 222 47% 11%;
+      --primary: 217 87% 17%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 210 40% 96%;
+      --secondary-foreground: 222 47% 11%;
+      --muted: 210 40% 96%;
+      --muted-foreground: 215 16% 47%;
+      --accent: 187 85% 43%;
+      --accent-foreground: 222 47% 11%;
+      --destructive: 0 84% 60%;
+      --destructive-foreground: 0 0% 100%;
+      --border: 214 32% 91%;
+      --input: 214 32% 91%;
+      --ring: 217 87% 17%;
+      --radius: 0.5rem;
+    }
+
+    * {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    .nav-link {
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: hsl(var(--accent));
+      transition: width 0.2s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .metric-card {
+      transition: all 0.2s ease-in-out;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .primary-button {
+      background: linear-gradient(135deg, #052252 0%, #0a3a7a 100%);
+      transition: all 0.2s ease-in-out;
+    }
+
+    .primary-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px hsl(217 87% 17% / 0.4);
+    }
+
+    .secondary-button {
+      background: white;
+      border: 1px solid hsl(var(--border));
+      transition: all 0.2s ease-in-out;
+    }
+
+    .secondary-button:hover {
+      background: hsl(var(--secondary));
+      border-color: hsl(var(--accent));
+    }
+
+    .table-row {
+      transition: background-color 0.15s ease;
+    }
+
+    .table-row:hover {
+      background-color: hsl(210 40% 96% / 0.5);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .slide-up {
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-input {
+      transition: all 0.2s ease-in-out;
+      border: 1px solid hsl(var(--border));
+    }
+
+    .form-input:focus {
+      border-color: #00b2ee;
+      box-shadow: 0 0 0 3px hsl(187 85% 43% / 0.15);
+      outline: none;
+    }
+
+    .tab-button {
+      transition: all 0.2s ease;
+    }
+
+    .tab-button.active {
+      background: #0067b8;
+      color: white;
+    }
+
+    .tab-button:not(.active):hover {
+      background: hsl(var(--secondary));
+      color: #0067b8;
+    }
+
+    .task-card {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .task-card:hover {
+      border-color: #00b2ee;
+      box-shadow: 0 4px 12px rgba(0, 178, 238, 0.15);
+    }
+
+    .task-card.selected {
+      border-color: #0067b8;
+      background: hsl(210 40% 96% / 0.5);
+    }
+
+    .checkbox-custom {
+      accent-color: #0067b8;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-white" data-element-id="task-assignment-page">
+  
+  <!-- Header with Logo -->
+  <header class="w-full py-4 px-8 border-b border-slate-100 bg-white sticky top-0 z-50" data-element-id="header">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4" data-element-id="logo-container">
+        <img src="./images/vm-logo.png" alt="Virtual Manager Logo" class="h-10 w-auto" data-element-id="company-logo">
+        <img src="./images/virtual-mgr-text.png" alt="Virtual Manager" class="h-6 w-auto" data-element-id="company-text">
+        <div class="h-6 w-px bg-slate-200 mx-2" data-element-id="divider"></div>
+        <span class="text-lg font-semibold text-[#052252]" data-element-id="product-name">HealthClean™</span>
+      </div>
+      
+      <!-- Navigation -->
+      <nav class="hidden md:flex items-center gap-8" data-element-id="main-nav">
+        <a href="#" class="nav-link text-sm font-medium text-slate-600 hover:text-[#052252]" data-element-id="nav-dashboard">Dashboard</a>
+        <a href="#" class="nav-link active text-sm font-medium text-[#052252]" data-element-id="nav-scheduling">Scheduling</a>
+        <a href="#" class="nav-link text-sm font-medium text-slate-600 hover:text-[#052252]" data-element-id="nav-team">Team</a>
+        <a href="#" class="nav-link text-sm font-medium text-slate-600 hover:text-[#052252]" data-element-id="nav-reports">Reports</a>
+        <a href="#" class="nav-link text-sm font-medium text-slate-600 hover:text-[#052252]" data-element-id="nav-settings">Settings</a>
+      </nav>
+
+      <!-- User Menu -->
+      <div class="flex items-center gap-4" data-element-id="user-menu">
+        <button class="relative p-2 text-slate-500 hover:text-[#052252] transition-colors" data-element-id="notifications-button">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+          </svg>
+          <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" data-element-id="notification-badge"></span>
+        </button>
+        <div class="flex items-center gap-3 pl-4 border-l border-slate-200" data-element-id="user-profile">
+          <div class="text-right">
+            <p class="text-sm font-medium text-slate-900" data-element-id="user-name">Sarah Johnson</p>
+            <p class="text-xs text-slate-500" data-element-id="user-role">EVS Manager</p>
+          </div>
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#0067b8] to-[#00b2ee] flex items-center justify-center text-white font-semibold text-sm" data-element-id="user-avatar">
+            SJ
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" data-element-id="main-content">
+    
+    <!-- Page Header -->
+    <div class="flex items-center justify-between mb-8 fade-in" data-element-id="page-header">
+      <div>
+        <h1 class="text-2xl font-semibold text-[#052252] tracking-tight" data-element-id="page-title">
+          Task Assignment
+        </h1>
+        <p class="mt-1 text-sm text-slate-500" data-element-id="page-subtitle">
+          Schedule and assign tasks to your EVS team members
+        </p>
+      </div>
+      <div class="flex items-center gap-3" data-element-id="header-actions">
+        <button class="secondary-button px-4 py-2 rounded-lg text-sm font-medium text-slate-700 flex items-center gap-2" data-element-id="view-schedule-button">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+          View Schedule
+        </button>
+        <button class="primary-button px-4 py-2 rounded-lg text-sm font-medium text-white flex items-center gap-2" data-element-id="publish-button">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          Publish Assignments
+        </button>
+      </div>
+    </div>
+
+    <!-- Date Selector Tabs -->
+    <div class="mb-6 fade-in" data-element-id="date-selector" style="animation-delay: 0.1s;">
+      <div class="flex items-center gap-2 bg-slate-50 p-1 rounded-lg inline-flex" data-element-id="date-tabs">
+        <button class="tab-button px-4 py-2 rounded-md text-sm font-medium text-slate-600" data-element-id="tab-mon">Mon 15</button>
+        <button class="tab-button px-4 py-2 rounded-md text-sm font-medium text-slate-600" data-element-id="tab-tue">Tue 16</button>
+        <button class="tab-button px-4 py-2 rounded-md text-sm font-medium text-slate-600" data-element-id="tab-wed">Wed 17</button>
+        <button class="tab-button active px-4 py-2 rounded-md text-sm font-medium" data-element-id="tab-thu">Thu 18</button>
+        <button class="tab-button px-4 py-2 rounded-md text-sm font-medium text-slate-600" data-element-id="tab-fri">Fri 19</button>
+        <button class="tab-button px-4 py-2 rounded-md text-sm font-medium text-slate-600" data-element-id="tab-sat">Sat 20</button>
+        <button class="tab-button px-4 py-2 rounded-md text-sm font-medium text-slate-600" data-element-id="tab-sun">Sun 21</button>
+      </div>
+      <button class="ml-4 p-2 text-slate-400 hover:text-[#0067b8] transition-colors" data-element-id="calendar-button">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="grid grid-cols-12 gap-6 slide-up" data-element-id="content-grid">
+      
+      <!-- Left Sidebar - Roster Selection -->
+      <div class="col-span-12 lg:col-span-3 space-y-6" data-element-id="roster-sidebar">
+        
+        <!-- Shift Filter -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4" data-element-id="shift-filter">
+          <h3 class="text-sm font-semibold text-[#083682] mb-3 flex items-center gap-2" data-element-id="shift-title">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Shift Filter
+          </h3>
+          <div class="space-y-2" data-element-id="shift-options">
+            <label class="flex items-center gap-2 cursor-pointer group" data-element-id="shift-morning">
+              <input type="checkbox" class="checkbox-custom w-4 h-4 rounded border-slate-300" checked>
+              <span class="text-sm text-slate-700 group-hover:text-[#0067b8] transition-colors">Morning (6AM-2PM)</span>
+              <span class="ml-auto text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">8</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer group" data-element-id="shift-afternoon">
+              <input type="checkbox" class="checkbox-custom w-4 h-4 rounded border-slate-300" checked>
+              <span class="text-sm text-slate-700 group-hover:text-[#0067b8] transition-colors">Afternoon (2PM-10PM)</span>
+              <span class="ml-auto text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">12</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer group" data-element-id="shift-night">
+              <input type="checkbox" class="checkbox-custom w-4 h-4 rounded border-slate-300">
+              <span class="text-sm text-slate-700 group-hover:text-[#0067b8] transition-colors">Night (10PM-6AM)</span>
+              <span class="ml-auto text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">4</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Available Staff -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4" data-element-id="staff-list">
+          <h3 class="text-sm font-semibold text-[#083682] mb-3 flex items-center gap-2" data-element-id="staff-title">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+            Available Staff (20)
+          </h3>
+          <div class="space-y-2 max-h-96 overflow-y-auto" data-element-id="staff-items">
+            
+            <!-- Staff Member 1 -->
+            <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 cursor-pointer group transition-colors" data-element-id="staff-1">
+              <div class="w-8 h-8 rounded-full bg-[#0067b8] flex items-center justify-center text-white text-xs font-semibold">MJ</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-slate-900 truncate">Maria Johnson</p>
+                <p class="text-xs text-slate-500">Senior EVS Tech</p>
+              </div>
+              <div class="w-2 h-2 rounded-full bg-green-500" data-element-id="status-1"></div>
+            </div>
+
+            <!-- Staff Member 2 -->
+            <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 cursor-pointer group transition-colors" data-element-id="staff-2">
+              <div class="w-8 h-8 rounded-full bg-[#00b2ee] flex items-center justify-center text-white text-xs font-semibold">DR</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-slate-900 truncate">David Rodriguez</p>
+                <p class="text-xs text-slate-500">EVS Tech</p>
+              </div>
+              <div class="w-2 h-2 rounded-full bg-green-500" data-element-id="status-2"></div>
+            </div>
+
+            <!-- Staff Member 3 -->
+            <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 cursor-pointer group transition-colors" data-element-id="staff-3">
+              <div class="w-8 h-8 rounded-full bg-[#052252] flex items-center justify-center text-white text-xs font-semibold">LC</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-slate-900 truncate">Lisa Chen</p>
+                <p class="text-xs text-slate-500">EVS Supervisor</p>
+              </div>
+              <div class="w-2 h-2 rounded-full bg-yellow-500" data-element-id="status-3"></div>
+            </div>
+
+            <!-- Staff Member 4 -->
+            <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 cursor-pointer group transition-colors" data-element-id="staff-4">
+              <div class="w-8 h-8 rounded-full bg-[#083682] flex items-center justify-center text-white text-xs font-semibold">JW</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-slate-900 truncate">James Wilson</p>
+                <p class="text-xs text-slate-500">EVS Tech</p>
+              </div>
+              <div class="w-2 h-2 rounded-full bg-green-500" data-element-id="status-4"></div>
+            </div>
+
+            <!-- Staff Member 5 -->
+            <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 cursor-pointer group transition-colors" data-element-id="staff-5">
+              <div class="w-8 h-8 rounded-full bg-[#0067b8] flex items-center justify-center text-white text-xs font-semibold">AP</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-slate-900 truncate">Amanda Peters</p>
+                <p class="text-xs text-slate-500">EVS Tech</p>
+              </div>
+              <div class="w-2 h-2 rounded-full bg-green-500" data-element-id="status-5"></div>
+            </div>
+
+            <!-- Staff Member 6 -->
+            <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 cursor-pointer group transition-colors" data-element-id="staff-6">
+              <div class="w-8 h-8 rounded-full bg-[#00b2ee] flex items-center justify-center text-white text-xs font-semibold">RK</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-slate-900 truncate">Robert Kim</p>
+                <p class="text-xs text-slate-500">Senior EVS Tech</p>
+              </div>
+              <div class="w-2 h-2 rounded-full bg-green-500" data-element-id="status-6"></div>
+            </div>
+
+          </div>
+          <button class="w-full mt-3 text-xs text-[#0067b8] hover:text-[#052252] font-medium flex items-center justify-center gap-1 transition-colors" data-element-id="view-all-staff">
+            View all staff
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="bg-gradient-to-br from-[#052252] to-[#083682] rounded-xl p-4 text-white" data-element-id="quick-stats">
+          <h3 class="text-sm font-semibold mb-3 opacity-90">Today's Overview</h3>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between" data-element-id="stat-assigned">
+              <span class="text-xs opacity-80">Tasks Assigned</span>
+              <span class="text-lg font-semibold">45/52</span>
+            </div>
+            <div class="w-full bg-white/20 rounded-full h-1.5" data-element-id="progress-bar">
+              <div class="bg-[#00b2ee] h-1.5 rounded-full" style="width: 87%"></div>
+            </div>
+            <div class="flex items-center justify-between text-xs" data-element-id="stat-details">
+              <span class="opacity-80">Coverage</span>
+              <span class="font-medium">87%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center - Task Assignment Area -->
+      <div class="col-span-12 lg:col-span-6 space-y-6" data-element-id="assignment-area">
+        
+        <!-- Assignment Form -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6" data-element-id="assignment-form">
+          <h2 class="text-lg font-semibold text-[#052252] mb-4 flex items-center gap-2" data-element-id="form-title">
+            <svg class="w-5 h-5 text-[#0067b8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+            </svg>
+            New Task Assignment
+          </h2>
+          
+          <div class="space-y-4">
+            <!-- Task Type & Priority -->
+            <div class="grid grid-cols-2 gap-4" data-element-id="task-type-row">
+              <div>
+                <label class="block text-sm font-medium text-[#083682] mb-1.5" data-element-id="task-type-label">Task Type</label>
+                <select class="form-input w-full px-3 py-2 rounded-lg text-sm text-slate-700 bg-white" data-element-id="task-type-select">
+                  <option>Select task type...</option>
+                  <option>Patient Room Cleaning</option>
+                  <option>OR Terminal Clean</option>
+                  <option>Discharge Cleaning</option>
+                  <option>Common Area Maintenance</option>
+                  <option>Waste Removal</option>
+                  <option>Equipment Cleaning</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-[#083682] mb-1.5" data-element-id="priority-label">Priority</label>
+                <select class="form-input w-full px-3 py-2 rounded-lg text-sm text-slate-700 bg-white" data-element-id="priority-select">
+                  <option>Normal</option>
+                  <option>High</option>
+                  <option>Urgent</option>
+                  <option>Stat</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div data-element-id="location-field">
+              <label class="block text-sm font-medium text-[#083682] mb-1.5" data-element-id="location-label">Location</label>
+              <div class="relative">
+                <input type="text" class="form-input w-full px-3 py-2 rounded-lg text-sm text-slate-700 pl-10" placeholder="Search for room, ward, or area..." data-element-id="location-input">
+                <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Assign To -->
+            <div data-element-id="assign-field">
+              <label class="block text-sm font-medium text-[#083682] mb-1.5" data-element-id="assign-label">Assign To</label>
+              <div class="flex gap-2" data-element-id="assign-options">
+                <button class="flex-1 py-2 px-3 rounded-lg border border-[#0067b8] bg-[#0067b8]/5 text-[#0067b8] text-sm font-medium flex items-center justify-center gap-2" data-element-id="assign-specific">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                  </svg>
+                  Specific Staff
+                </button>
+                <button class="flex-1 py-2 px-3 rounded-lg border border-slate-200 text-slate-600 text-sm font-medium flex items-center justify-center gap-2 hover:border-[#00b2ee] hover:text-[#00b2ee] transition-colors" data-element-id="assign-role">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                  </svg>
+                  By Role
+                </button>
+              </div>
+            </div>
+
+            <!-- Selected Staff -->
+            <div class="bg-slate-50 rounded-lg p-3 border border-slate-200" data-element-id="selected-staff">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-[#0067b8] flex items-center justify-center text-white text-xs font-semibold">MJ</div>
+                  <div>
+                    <p class="text-sm font-medium text-slate-900">Maria Johnson</p>
+                    <p class="text-xs text-slate-500">Morning Shift • Senior EVS Tech</p>
+                  </div>
+                </div>
+                <button class="text-slate-400 hover:text-red-500 transition-colors" data-element-id="remove-staff">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Time & Duration -->
+            <div class="grid grid-cols-3 gap-4" data-element-id="time-row">
+              <div>
+                <label class="block text-sm font-medium text-[#083682] mb-1.5" data-element-id="start-label">Start Time</label>
+                <input type="time" class="form-input w-full px-3 py-2 rounded-lg text-sm text-slate-700" value="08:00" data-element-id="start-input">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-[#083682] mb-1.5" data-element-id="duration-label">Duration</label>
+                <select class="form-input w-full px-3 py-2 rounded-lg text-sm text-slate-700" data-element-id="duration-select">
+                  <option>30 min</option>
+                  <option selected>45 min</option>
+                  <option>1 hour</option>
+                  <option>1.5 hours</option>
+                  <option>2 hours</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-[#083682] mb-1.5" data-element-id="end-label">End Time</label>
+                <input type="time" class="form-input w-full px-3 py-2 rounded-lg text-sm text-slate-700 bg-slate-50" value="08:45" readonly data-element-id="end-input">
+              </div>
+            </div>
+
+            <!-- Notes -->
+            <div data-element-id="notes-field">
+              <label class="block text-sm font-medium text-[#083682] mb-1.5" data-element-id="notes-label">Notes (Optional)</label>
+              <textarea class="form-input w-full px-3 py-2 rounded-lg text-sm text-slate-700 resize-none" rows="2" placeholder="Add any special instructions..." data-element-id="notes-input"></textarea>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-3 pt-2" data-element-id="form-actions">
+              <button class="flex-1 primary-button py-2.5 rounded-lg text-sm font-medium text-white flex items-center justify-center gap-2" data-element-id="assign-task-button">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                Assign Task
+              </button>
+              <button class="secondary-button px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600" data-element-id="clear-button">
+                Clear
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Assignments -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm" data-element-id="recent-assignments">
+          <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between" data-element-id="recent-header">
+            <h3 class="text-sm font-semibold text-[#083682]">Recent Assignments</h3>
+            <button class="text-xs text-[#0067b8] hover:text-[#052252] font-medium" data-element-id="view-all-recent">View all</button>
+          </div>
+          <div class="divide-y divide-slate-100" data-element-id="recent-list">
+            
+            <!-- Recent 1 -->
+            <div class="px-6 py-3 flex items-center gap-4 table-row" data-element-id="recent-1">
+              <div class="w-2 h-2 rounded-full bg-green-500" data-element-id="recent-status-1"></div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-slate-900">OR Terminal Clean - Room 302</p>
+                <p class="text-xs text-slate-500">Maria Johnson • 8:00 AM - 9:00 AM</p>
+              </div>
+              <span class="px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded" data-element-id="recent-priority-1">Stat</span>
+            </div>
+
+            <!-- Recent 2 -->
+            <div class="px-6 py-3 flex items-center gap-4 table-row" data-element-id="recent-2">
+              <div class="w-2 h-2 rounded-full bg-yellow-500" data-element-id="recent-status-2"></div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-slate-900">Discharge Cleaning - Room 215</p>
+                <p class="text-xs text-slate-500">David Rodriguez • 8:15 AM - 9:00 AM</p>
+              </div>
+              <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded" data-element-id="recent-priority-2">High</span>
+            </div>
+
+            <!-- Recent 3 -->
+            <div class="px-6 py-3 flex items-center gap-4 table-row" data-element-id="recent-3">
+              <div class="w-2 h-2 rounded-full bg-green-500" data-element-id="recent-status-3"></div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-slate-900">Common Area - ICU Waiting</p>
+                <p class="text-xs text-slate-500">Lisa Chen • 8:30 AM - 9:15 AM</p>
+              </div>
+              <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded" data-element-id="recent-priority-3">Normal</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Sidebar - Tasks & Templates -->
+      <div class="col-span-12 lg:col-span-3 space-y-6" data-element-id="tasks-sidebar">
+        
+        <!-- Task Templates -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4" data-element-id="task-templates">
+          <h3 class="text-sm font-semibold text-[#083682] mb-3 flex items-center gap-2" data-element-id="templates-title">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+            </svg>
+            Task Templates
+          </h3>
+          <div class="space-y-2" data-element-id="template-list">
+            <div class="task-card selected p-3 rounded-lg border border-slate-200" data-element-id="template-1">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-[#0067b8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-slate-900">Patient Room Standard</p>
+                  <p class="text-xs text-slate-500">45 min • Standard priority</p>
+                </div>
+              </div>
+            </div>
+            <div class="task-card p-3 rounded-lg border border-slate-200" data-element-id="template-2">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-slate-900">OR Terminal Clean</p>
+                  <p class="text-xs text-slate-500">60 min • Stat priority</p>
+                </div>
+              </div>
+            </div>
+            <div class="task-card p-3 rounded-lg border border-slate-200" data-element-id="template-3">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg bg-yellow-100 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-slate-900">Discharge Cleaning</p>
+                  <p class="text-xs text-slate-500">30 min • High priority</p>
+                </div>
+              </div>
+            </div>
+            <div class="task-card p-3 rounded-lg border border-slate-200" data-element-id="template-4">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-slate-900">Equipment Clean</p>
+                  <p class="text-xs text-slate-500">20 min • Normal priority</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zone Assignments -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4" data-element-id="zone-assignments">
+          <h3 class="text-sm font-semibold text-[#083682] mb-3 flex items-center gap-2" data-element-id="zone-title">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0121 18.382V7.618a1 1 0 01-.806-.984A11.962 11.962 0 0115 6.333V7m0 13V7"></path>
+            </svg>
+            Zone Coverage
+          </h3>
+          <div class="space-y-3" data-element-id="zone-list">
+            <div class="flex items-center justify-between p-2 rounded-lg bg-slate-50" data-element-id="zone-1">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                <span class="text-sm text-slate-700">ICU (3rd Floor)</span>
+              </div>
+              <span class="text-xs font-medium text-green-600">100%</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded-lg bg-slate-50" data-element-id="zone-2">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                <span class="text-sm text-slate-700">Emergency</span>
+              </div>
+              <span class="text-xs font-medium text-green-600">100%</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded-lg bg-slate-50" data-element-id="zone-3">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                <span class="text-sm text-slate-700">Surgery (2nd Floor)</span>
+              </div>
+              <span class="text-xs font-medium text-yellow-600">75%</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded-lg bg-slate-50" data-element-id="zone-4">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                <span class="text-sm text-slate-700">General Wards</span>
+              </div>
+              <span class="text-xs font-medium text-green-600">100%</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded-lg bg-slate-50" data-element-id="zone-5">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                <span class="text-sm text-slate-700">Outpatient</span>
+              </div>
+              <span class="text-xs font-medium text-red-600">50%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-gradient-to-br from-[#0067b8] to-[#00b2ee] rounded-xl p-4 text-white" data-element-id="quick-actions">
+          <h3 class="text-sm font-semibold mb-3">Quick Actions</h3>
+          <div class="space-y-2">
+            <button class="w-full py-2 px-3 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium text-left flex items-center gap-2" data-element-id="action-bulk">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+              </svg>
+              Bulk Assignment
+            </button>
+            <button class="w-full py-2 px-3 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium text-left flex items-center gap-2" data-element-id="action-copy">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+              </svg>
+              Copy from Yesterday
+            </button>
+            <button class="w-full py-2 px-3 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium text-left flex items-center gap-2" data-element-id="action-auto">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+              Auto-Assign
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 bg-white mt-auto" data-element-id="footer">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex items-center justify-between text-xs text-slate-500" data-element-id="footer-content">
+        <p>© 2024 Virtual Manager. All rights reserved.</p>
+        <div class="flex items-center gap-4">
+          <a href="#" class="hover:text-[#0067b8] transition-colors">Help Center</a>
+          <a href="#" class="hover:text-[#0067b8] transition-colors">Support</a>
+          <span>HealthClean™ v2.0</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

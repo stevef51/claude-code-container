@@ -1,0 +1,26 @@
+{
+  "name": "@design/application-look-and-feel-classic-corporate",
+  "version": "1.1.0",
+  "description": "Design system package: Classic Corporate",
+  "main": "src/tokens.json",
+  "exports": {
+    "./tokens.json": "src/tokens.json",
+    "./tokens.css": "src/tokens.css",
+    "./theme.css": "src/theme.css",
+    "./tailwind-preset.css": "src/tailwind-preset.css",
+    "./images/*": "src/images/*",
+    ".": "src/tokens.json"
+  },
+  "files": [
+    "src/",
+    "reference/",
+    "README.md"
+  ],
+  "keywords": [
+    "design-system",
+    "design-tokens",
+    "tailwind",
+    "theme"
+  ],
+  "license": "UNLICENSED"
+}

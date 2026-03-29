@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toast Notifications (Sonner) — Classic Corporate</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 222 47% 11%;
+      --card: 0 0% 100%;
+      --card-foreground: 222 47% 11%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 222 47% 11%;
+      --primary: 217 87% 17%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 210 40% 96%;
+      --secondary-foreground: 222 47% 11%;
+      --muted: 210 40% 96%;
+      --muted-foreground: 215 16% 47%;
+      --accent: 187 85% 43%;
+      --accent-foreground: 222 47% 11%;
+      --destructive: 0 84% 60%;
+      --destructive-foreground: 0 0% 100%;
+      --border: 214 32% 91%;
+      --input: 214 32% 91%;
+      --ring: 217 87% 17%;
+      --radius: 0.5rem;
+    }
+
+    * {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      border-color: hsl(var(--border));
+    }
+
+    body {
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+    }
+
+    /* Primary button gradient */
+    button[style*="background: hsl(var(--primary))"],
+    button[data-element-id="sonner-action"] button:first-child {
+      background: linear-gradient(135deg, #052252 0%, #0a3a7a 100%) !important;
+      transition: all 0.2s ease-in-out;
+    }
+
+    button[style*="background: hsl(var(--primary))"]:hover,
+    button[data-element-id="sonner-action"] button:first-child:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px hsl(217 87% 17% / 0.4);
+    }
+
+    /* Secondary/outline button hover */
+    button[style*="border: 1px solid hsl(var(--input))"] {
+      transition: all 0.2s ease-in-out;
+    }
+
+    button[style*="border: 1px solid hsl(var(--input))"]:hover {
+      background: hsl(var(--secondary));
+      border-color: hsl(var(--accent));
+    }
+
+    /* Toast card hover effects */
+    div[data-element-id^="sonner-"] {
+      transition: all 0.2s ease-in-out;
+    }
+
+    div[data-element-id^="sonner-"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Position cards hover */
+    div[data-element-id^="pos-"] {
+      transition: all 0.2s ease-in-out;
+    }
+
+    div[data-element-id^="pos-"]:hover {
+      border-color: hsl(var(--accent));
+      box-shadow: 0 4px 12px hsl(var(--accent) / 0.15);
+    }
+
+    /* Fade in animation */
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Undo button specific styling */
+    button:contains("Undo") {
+      background: hsl(var(--background));
+      transition: all 0.2s ease;
+    }
+
+    button:contains("Undo"):hover {
+      background: hsl(var(--secondary));
+      border-color: hsl(var(--accent));
+      color: hsl(var(--accent));
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-white">
+  <!-- Header with Logo -->
+  <header class="w-full py-6 px-8 border-b border-slate-100 bg-white" data-element-id="page-header-banner">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4" data-element-id="logo-container">
+        <img src="./images/vm-logo.png" alt="Virtual Manager Logo" class="h-12 w-auto" data-element-id="company-logo">
+        <img src="./images/virtual-mgr-text.png" alt="Virtual Manager" class="h-8 w-auto" data-element-id="company-text">
+      </div>
+      <span class="text-sm text-slate-500 font-medium" data-element-id="product-tag">HealthClean™</span>
+    </div>
+  </header>
+
+  <div class="max-w-4xl mx-auto p-8 space-y-12 fade-in">
+    <header data-element-id="page-header">
+      <h1 data-element-id="page-title" class="text-3xl font-bold tracking-tight" style="color: hsl(var(--foreground))">Toast Notifications (Sonner)</h1>
+      <p data-element-id="page-description" class="mt-2 text-lg" style="color: hsl(var(--muted-foreground))">Elegant toast notification patterns for user feedback.</p>
+    </header>
+
+    <!-- Default Toasts -->
+    <section data-element-id="default-toasts-section" class="space-y-6">
+      <h2 data-element-id="default-toasts-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Toast Variants</h2>
+      <div class="space-y-3">
+        <div data-element-id="sonner-default" class="flex items-center gap-3 p-4 shadow-lg" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <div class="flex-1">
+            <p class="text-sm font-semibold" style="color: hsl(var(--card-foreground))">Event has been created</p>
+            <p class="text-sm" style="color: hsl(var(--muted-foreground))">Sunday, December 03, 2023 at 9:00 AM</p>
+          </div>
+          <button class="inline-flex items-center justify-center whitespace-nowrap text-xs font-medium h-8 px-3" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">Undo</button>
+        </div>
+        <div data-element-id="sonner-success" class="flex items-center gap-3 p-4 shadow-lg" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <svg class="w-5 h-5 flex-shrink-0" style="color: #16a34a" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <div class="flex-1">
+            <p class="text-sm font-semibold" style="color: hsl(var(--card-foreground))">Profile updated</p>
+            <p class="text-sm" style="color: hsl(var(--muted-foreground))">Your profile has been updated successfully.</p>
+          </div>
+        </div>
+        <div data-element-id="sonner-error" class="flex items-center gap-3 p-4 shadow-lg" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <svg class="w-5 h-5 flex-shrink-0" style="color: hsl(var(--destructive))" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <div class="flex-1">
+            <p class="text-sm font-semibold" style="color: hsl(var(--card-foreground))">Error occurred</p>
+            <p class="text-sm" style="color: hsl(var(--muted-foreground))">There was an error with your request.</p>
+          </div>
+        </div>
+        <div data-element-id="sonner-info" class="flex items-center gap-3 p-4 shadow-lg" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <svg class="w-5 h-5 flex-shrink-0" style="color: #2563eb" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <div class="flex-1">
+            <p class="text-sm font-semibold" style="color: hsl(var(--card-foreground))">Heads up!</p>
+            <p class="text-sm" style="color: hsl(var(--muted-foreground))">You can customize the position and styling of toasts.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toast with Action -->
+    <section data-element-id="action-toasts-section" class="space-y-6">
+      <h2 data-element-id="action-toasts-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Toast with Actions</h2>
+      <div class="space-y-3">
+        <div data-element-id="sonner-action" class="flex items-center gap-3 p-4 shadow-lg" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <div class="flex-1">
+            <p class="text-sm font-semibold" style="color: hsl(var(--card-foreground))">Message sent</p>
+            <p class="text-sm" style="color: hsl(var(--muted-foreground))">Your message has been delivered.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button class="inline-flex items-center justify-center whitespace-nowrap text-xs font-medium h-8 px-3" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">View</button>
+            <button class="inline-flex items-center justify-center whitespace-nowrap text-xs font-medium h-8 px-3" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">Dismiss</button>
+          </div>
+        </div>
+        <div data-element-id="sonner-promise" class="flex items-center gap-3 p-4 shadow-lg" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--card))">
+          <div class="w-4 h-4 rounded-full animate-spin flex-shrink-0" style="border: 2px solid hsl(var(--muted)); border-top-color: hsl(var(--primary))"></div>
+          <div class="flex-1">
+            <p class="text-sm font-semibold" style="color: hsl(var(--card-foreground))">Uploading document...</p>
+            <p class="text-sm" style="color: hsl(var(--muted-foreground))">This may take a few seconds.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toast Positions -->
+    <section data-element-id="positions-section" class="space-y-6">
+      <h2 data-element-id="positions-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Toast Positions</h2>
+      <div class="grid grid-cols-3 gap-4">
+        <div data-element-id="pos-top-left" class="relative h-32 overflow-hidden" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--muted))">
+          <div class="absolute top-2 left-2 right-2 p-2 shadow-sm text-xs" style="background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: calc(var(--radius) - 2px); color: hsl(var(--card-foreground))">Top Left</div>
+          <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px]" style="color: hsl(var(--muted-foreground))">top-left</span>
+        </div>
+        <div data-element-id="pos-top-center" class="relative h-32 overflow-hidden" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--muted))">
+          <div class="absolute top-2 left-2 right-2 p-2 shadow-sm text-xs text-center" style="background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: calc(var(--radius) - 2px); color: hsl(var(--card-foreground))">Top Center</div>
+          <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px]" style="color: hsl(var(--muted-foreground))">top-center</span>
+        </div>
+        <div data-element-id="pos-top-right" class="relative h-32 overflow-hidden" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--muted))">
+          <div class="absolute top-2 left-2 right-2 p-2 shadow-sm text-xs text-right" style="background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: calc(var(--radius) - 2px); color: hsl(var(--card-foreground))">Top Right</div>
+          <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px]" style="color: hsl(var(--muted-foreground))">top-right</span>
+        </div>
+        <div data-element-id="pos-bottom-left" class="relative h-32 overflow-hidden" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--muted))">
+          <div class="absolute bottom-8 left-2 right-2 p-2 shadow-sm text-xs" style="background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: calc(var(--radius) - 2px); color: hsl(var(--card-foreground))">Bottom Left</div>
+          <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px]" style="color: hsl(var(--muted-foreground))">bottom-left</span>
+        </div>
+        <div data-element-id="pos-bottom-center" class="relative h-32 overflow-hidden" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--muted))">
+          <div class="absolute bottom-8 left-2 right-2 p-2 shadow-sm text-xs text-center" style="background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: calc(var(--radius) - 2px); color: hsl(var(--card-foreground))">Bottom Center</div>
+          <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px]" style="color: hsl(var(--muted-foreground))">bottom-center</span>
+        </div>
+        <div data-element-id="pos-bottom-right" class="relative h-32 overflow-hidden" style="border: 1px solid hsl(var(--border)); border-radius: var(--radius); background: hsl(var(--muted))">
+          <div class="absolute bottom-8 left-2 right-2 p-2 shadow-sm text-xs text-right" style="background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: calc(var(--radius) - 2px); color: hsl(var(--card-foreground))">Bottom Right</div>
+          <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px]" style="color: hsl(var(--muted-foreground))">bottom-right</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Elements — Classic Corporate</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 222 47% 11%;
+      --card: 0 0% 100%;
+      --card-foreground: 222 47% 11%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 222 47% 11%;
+      --primary: 217 87% 17%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 210 40% 96%;
+      --secondary-foreground: 222 47% 11%;
+      --muted: 210 40% 96%;
+      --muted-foreground: 215 16% 47%;
+      --accent: 187 85% 43%;
+      --accent-foreground: 222 47% 11%;
+      --destructive: 0 84% 60%;
+      --destructive-foreground: 0 0% 100%;
+      --border: 214 32% 91%;
+      --input: 214 32% 91%;
+      --ring: 217 87% 17%;
+      --radius: 0.5rem;
+    }
+
+    * {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      border-color: hsl(var(--border));
+    }
+
+    body {
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+    }
+
+    /* Input focus styles */
+    input:focus, textarea:focus, select:focus {
+      border-color: hsl(var(--accent));
+      box-shadow: 0 0 0 3px hsl(var(--accent) / 0.15);
+      outline: none;
+    }
+
+    /* Primary button gradient */
+    button[data-element-id="btn-primary"],
+    button[data-element-id="btn-sm"],
+    button[data-element-id="btn-default"],
+    button[data-element-id="btn-lg"],
+    button[data-element-id="btn-icon"],
+    button[data-element-id="btn-loading"] {
+      background: linear-gradient(135deg, #052252 0%, #0a3a7a 100%);
+      transition: all 0.2s ease-in-out;
+    }
+
+    button[data-element-id="btn-primary"]:hover,
+    button[data-element-id="btn-sm"]:hover,
+    button[data-element-id="btn-default"]:hover,
+    button[data-element-id="btn-lg"]:hover,
+    button[data-element-id="btn-icon"]:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px hsl(217 87% 17% / 0.4);
+    }
+
+    button[data-element-id="btn-secondary"]:hover {
+      background: hsl(var(--secondary));
+      border-color: hsl(var(--accent));
+    }
+
+    button[data-element-id="btn-outline"]:hover {
+      background: hsl(var(--secondary));
+      border-color: hsl(var(--accent));
+    }
+
+    button[data-element-id="btn-ghost"]:hover {
+      background: hsl(var(--secondary));
+      color: hsl(var(--accent));
+    }
+
+    /* Switch toggle transitions */
+    button[role="switch"] {
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    button[role="switch"] span {
+      transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    }
+
+    /* Checkbox and radio hover states */
+    label[class*="flex items-center gap-3"]:hover {
+      cursor: pointer;
+    }
+
+    label[class*="flex items-center gap-3"]:hover div[class*="rounded-sm"],
+    label[class*="flex items-center gap-3"]:hover div[class*="rounded-full"] {
+      border-color: hsl(var(--accent));
+    }
+
+    /* Slider thumb hover */
+    div[data-element-id="volume-slider"]:hover div[class*="block h-5 w-5"],
+    div[data-element-id="brightness-slider"]:hover div[class*="block h-5 w-5"] {
+      box-shadow: 0 0 0 3px hsl(var(--accent) / 0.3);
+    }
+
+    /* Select hover */
+    div[data-element-id="country-select"]:hover,
+    div[data-element-id="role-select"]:hover {
+      border-color: hsl(var(--accent));
+      cursor: pointer;
+    }
+
+    /* Fade in animation */
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-white">
+  <!-- Header with Logo -->
+  <header class="w-full py-6 px-8 border-b border-slate-100 bg-white" data-element-id="page-header-banner">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4" data-element-id="logo-container">
+        <img src="./images/vm-logo.png" alt="Virtual Manager Logo" class="h-12 w-auto" data-element-id="company-logo">
+        <img src="./images/virtual-mgr-text.png" alt="Virtual Manager" class="h-8 w-auto" data-element-id="company-text">
+      </div>
+      <span class="text-sm text-slate-500 font-medium" data-element-id="product-tag">HealthClean™</span>
+    </div>
+  </header>
+
+  <div class="max-w-4xl mx-auto p-8 space-y-12 fade-in">
+    <header data-element-id="page-header">
+      <h1 data-element-id="page-title" class="text-3xl font-bold tracking-tight" style="color: hsl(var(--foreground))">Form Elements</h1>
+      <p data-element-id="page-description" class="mt-2 text-lg" style="color: hsl(var(--muted-foreground))">A showcase of form controls and input components.</p>
+    </header>
+
+    <!-- Text Inputs -->
+    <section data-element-id="text-inputs-section" class="space-y-6">
+      <h2 data-element-id="text-inputs-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Text Inputs</h2>
+      <div class="grid grid-cols-2 gap-6">
+        <div data-element-id="username-field" class="space-y-2">
+          <label data-element-id="username-label" class="text-sm font-medium leading-none" style="color: hsl(var(--foreground))">Username</label>
+          <input data-element-id="username-input" type="text" placeholder="Enter username" class="flex h-10 w-full rounded-md px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)" />
+        </div>
+        <div data-element-id="email-field" class="space-y-2">
+          <label data-element-id="email-label" class="text-sm font-medium leading-none" style="color: hsl(var(--foreground))">Email</label>
+          <input data-element-id="email-input" type="email" placeholder="you@example.com" class="flex h-10 w-full rounded-md px-3 py-2 text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)" />
+        </div>
+        <div data-element-id="password-field" class="space-y-2">
+          <label data-element-id="password-label" class="text-sm font-medium leading-none" style="color: hsl(var(--foreground))">Password</label>
+          <input data-element-id="password-input" type="password" placeholder="Enter password" class="flex h-10 w-full rounded-md px-3 py-2 text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)" />
+        </div>
+        <div data-element-id="number-field" class="space-y-2">
+          <label data-element-id="number-label" class="text-sm font-medium leading-none" style="color: hsl(var(--foreground))">Quantity</label>
+          <input data-element-id="number-input" type="number" placeholder="0" value="1" class="flex h-10 w-full rounded-md px-3 py-2 text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Textarea -->
+    <section data-element-id="textarea-section" class="space-y-6">
+      <h2 data-element-id="textarea-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Textarea</h2>
+      <div data-element-id="message-field" class="space-y-2">
+        <label data-element-id="message-label" class="text-sm font-medium leading-none" style="color: hsl(var(--foreground))">Message</label>
+        <textarea data-element-id="message-textarea" rows="4" placeholder="Type your message here..." class="flex min-h-[80px] w-full rounded-md px-3 py-2 text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 resize-none transition-all duration-200" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)"></textarea>
+        <p data-element-id="message-hint" class="text-xs" style="color: hsl(var(--muted-foreground))">Maximum 500 characters.</p>
+      </div>
+    </section>
+
+    <!-- Select -->
+    <section data-element-id="select-section" class="space-y-6">
+      <h2 data-element-id="select-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Select</h2>
+      <div class="grid grid-cols-2 gap-6">
+        <div data-element-id="country-field" class="space-y-2">
+          <label data-element-id="country-label" class="text-sm font-medium leading-none" style="color: hsl(var(--foreground))">Country</label>
+          <div data-element-id="country-select" class="flex h-10 w-full items-center justify-between rounded-md px-3 py-2 text-sm transition-all duration-200" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">
+            <span style="color: hsl(var(--muted-foreground))">Select a country</span>
+            <svg class="h-4 w-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </div>
+        </div>
+        <div data-element-id="role-field" class="space-y-2">
+          <label data-element-id="role-label" class="text-sm font-medium leading-none" style="color: hsl(var(--foreground))">Role</label>
+          <div data-element-id="role-select" class="flex h-10 w-full items-center justify-between rounded-md px-3 py-2 text-sm transition-all duration-200" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">
+            <span>Viewer</span>
+            <svg class="h-4 w-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Checkboxes & Radio Groups -->
+    <section data-element-id="checks-radios-section" class="space-y-6">
+      <h2 data-element-id="checks-radios-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Checkboxes &amp; Radio Groups</h2>
+      <div class="grid grid-cols-2 gap-8">
+        <div data-element-id="checkbox-group" class="space-y-3">
+          <p data-element-id="checkbox-group-label" class="text-sm font-medium" style="color: hsl(var(--foreground))">Notifications</p>
+          <label data-element-id="checkbox-email" class="flex items-center gap-3">
+            <div class="h-4 w-4 shrink-0 rounded-sm flex items-center justify-center transition-all duration-200" style="border: 1px solid hsl(var(--primary)); background: hsl(var(--primary))">
+              <svg class="h-3 w-3" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <span class="text-sm" style="color: hsl(var(--foreground))">Email notifications</span>
+          </label>
+          <label data-element-id="checkbox-sms" class="flex items-center gap-3">
+            <div class="h-4 w-4 shrink-0 rounded-sm transition-all duration-200" style="border: 1px solid hsl(var(--input))"></div>
+            <span class="text-sm" style="color: hsl(var(--foreground))">SMS notifications</span>
+          </label>
+          <label data-element-id="checkbox-push" class="flex items-center gap-3">
+            <div class="h-4 w-4 shrink-0 rounded-sm flex items-center justify-center transition-all duration-200" style="border: 1px solid hsl(var(--primary)); background: hsl(var(--primary))">
+              <svg class="h-3 w-3" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <span class="text-sm" style="color: hsl(var(--foreground))">Push notifications</span>
+          </label>
+        </div>
+        <div data-element-id="radio-group" class="space-y-3">
+          <p data-element-id="radio-group-label" class="text-sm font-medium" style="color: hsl(var(--foreground))">Plan</p>
+          <label data-element-id="radio-free" class="flex items-center gap-3">
+            <div class="h-4 w-4 shrink-0 rounded-full flex items-center justify-center transition-all duration-200" style="border: 1px solid hsl(var(--primary))">
+              <div class="h-2.5 w-2.5 rounded-full" style="background: hsl(var(--primary))"></div>
+            </div>
+            <span class="text-sm" style="color: hsl(var(--foreground))">Free</span>
+          </label>
+          <label data-element-id="radio-pro" class="flex items-center gap-3">
+            <div class="h-4 w-4 shrink-0 rounded-full transition-all duration-200" style="border: 1px solid hsl(var(--input))"></div>
+            <span class="text-sm" style="color: hsl(var(--foreground))">Pro — $9/month</span>
+          </label>
+          <label data-element-id="radio-enterprise" class="flex items-center gap-3">
+            <div class="h-4 w-4 shrink-0 rounded-full transition-all duration-200" style="border: 1px solid hsl(var(--input))"></div>
+            <span class="text-sm" style="color: hsl(var(--foreground))">Enterprise — Contact us</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Switch -->
+    <section data-element-id="switch-section" class="space-y-6">
+      <h2 data-element-id="switch-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Switches</h2>
+      <div class="space-y-4">
+        <div data-element-id="switch-dark-mode" class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium" style="color: hsl(var(--foreground))">Dark mode</p>
+            <p class="text-xs" style="color: hsl(var(--muted-foreground))">Toggle dark theme across the application.</p>
+          </div>
+          <button data-element-id="switch-dark-mode-toggle" role="switch" aria-checked="false" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full" style="background: hsl(var(--input))">
+            <span class="pointer-events-none block h-5 w-5 rounded-full shadow-lg ring-0 translate-x-0.5" style="background: hsl(var(--background))"></span>
+          </button>
+        </div>
+        <div data-element-id="switch-auto-save" class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium" style="color: hsl(var(--foreground))">Auto-save</p>
+            <p class="text-xs" style="color: hsl(var(--muted-foreground))">Automatically save changes every 30 seconds.</p>
+          </div>
+          <button data-element-id="switch-auto-save-toggle" role="switch" aria-checked="true" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full" style="background: hsl(var(--primary))">
+            <span class="pointer-events-none block h-5 w-5 rounded-full shadow-lg ring-0 translate-x-5" style="background: hsl(var(--primary-foreground))"></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slider -->
+    <section data-element-id="slider-section" class="space-y-6">
+      <h2 data-element-id="slider-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Slider</h2>
+      <div class="space-y-4">
+        <div data-element-id="volume-slider-field" class="space-y-2">
+          <div class="flex justify-between">
+            <label data-element-id="volume-label" class="text-sm font-medium" style="color: hsl(var(--foreground))">Volume</label>
+            <span data-element-id="volume-value" class="text-sm" style="color: hsl(var(--muted-foreground))">75%</span>
+          </div>
+          <div data-element-id="volume-slider" class="relative flex w-full touch-none select-none items-center">
+            <div class="relative h-2 w-full grow overflow-hidden rounded-full" style="background: hsl(var(--secondary))">
+              <div class="absolute h-full rounded-full" style="background: hsl(var(--primary)); width: 75%"></div>
+            </div>
+            <div class="block h-5 w-5 rounded-full shadow-md cursor-pointer transition-all duration-200 hover:scale-110" style="background: hsl(var(--background)); border: 2px solid hsl(var(--primary)); position: absolute; left: 75%; transform: translateX(-50%)"></div>
+          </div>
+        </div>
+        <div data-element-id="brightness-slider-field" class="space-y-2">
+          <div class="flex justify-between">
+            <label data-element-id="brightness-label" class="text-sm font-medium" style="color: hsl(var(--foreground))">Brightness</label>
+            <span data-element-id="brightness-value" class="text-sm" style="color: hsl(var(--muted-foreground))">50%</span>
+          </div>
+          <div data-element-id="brightness-slider" class="relative flex w-full touch-none select-none items-center">
+            <div class="relative h-2 w-full grow overflow-hidden rounded-full" style="background: hsl(var(--secondary))">
+              <div class="absolute h-full rounded-full" style="background: hsl(var(--primary)); width: 50%"></div>
+            </div>
+            <div class="block h-5 w-5 rounded-full shadow-md cursor-pointer transition-all duration-200 hover:scale-110" style="background: hsl(var(--background)); border: 2px solid hsl(var(--primary)); position: absolute; left: 50%; transform: translateX(-50%)"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Buttons -->
+    <section data-element-id="buttons-section" class="space-y-6">
+      <h2 data-element-id="buttons-heading" class="text-xl font-semibold pb-2" style="border-bottom: 1px solid hsl(var(--border))">Buttons</h2>
+
+      <div data-element-id="button-variants" class="space-y-4">
+        <p class="text-sm font-medium" style="color: hsl(var(--muted-foreground))">Variants</p>
+        <div class="flex flex-wrap gap-3">
+          <button data-element-id="btn-primary" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">Primary</button>
+          <button data-element-id="btn-secondary" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2" style="background: hsl(var(--secondary)); color: hsl(var(--secondary-foreground)); border-radius: var(--radius)">Secondary</button>
+          <button data-element-id="btn-outline" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2" style="border: 1px solid hsl(var(--input)); background: hsl(var(--background)); color: hsl(var(--foreground)); border-radius: var(--radius)">Outline</button>
+          <button data-element-id="btn-ghost" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2" style="color: hsl(var(--foreground)); border-radius: var(--radius)">Ghost</button>
+          <button data-element-id="btn-destructive" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 hover:opacity-90" style="background: hsl(var(--destructive)); color: hsl(var(--destructive-foreground)); border-radius: var(--radius)">Destructive</button>
+        </div>
+      </div>
+
+      <div data-element-id="button-sizes" class="space-y-4">
+        <p class="text-sm font-medium" style="color: hsl(var(--muted-foreground))">Sizes</p>
+        <div class="flex flex-wrap items-center gap-3">
+          <button data-element-id="btn-sm" class="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors h-9 px-3 text-xs" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">Small</button>
+          <button data-element-id="btn-default" class="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors h-10 px-4 py-2 text-sm" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">Default</button>
+          <button data-element-id="btn-lg" class="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors h-11 px-8 text-sm" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">Large</button>
+          <button data-element-id="btn-icon" class="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors h-10 w-10" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <div data-element-id="button-states" class="space-y-4">
+        <p class="text-sm font-medium" style="color: hsl(var(--muted-foreground))">States</p>
+        <div class="flex flex-wrap gap-3">
+          <button data-element-id="btn-disabled" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 py-2 opacity-50 cursor-not-allowed" disabled style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">Disabled</button>
+          <button data-element-id="btn-loading" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium h-10 px-4 py-2 gap-2" style="background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-radius: var(--radius)">
+            <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+            Loading
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Simple interactivity for switches
+    document.querySelectorAll('button[role="switch"]').forEach(switchBtn => {
+      switchBtn.addEventListener('click', () => {
+        const isChecked = switchBtn.getAttribute('aria-checked') === 'true';
+        const newState = !isChecked;
+        switchBtn.setAttribute('aria-checked', newState);
+        
+        const thumb = switchBtn.querySelector('span');
+        if (newState) {
+          switchBtn.style.background = 'hsl(var(--primary))';
+          thumb.style.background = 'hsl(var(--primary-foreground))';
+          thumb.style.transform = 'translateX(20px)';
+        } else {
+          switchBtn.style.background = 'hsl(var(--input))';
+          thumb.style.background = 'hsl(var(--background))';
+          thumb.style.transform = 'translateX(2px)';
+        }
+      });
+    });
+
+    // Checkbox interaction
+    document.querySelectorAll('[data-element-id^="checkbox-"]').forEach(checkbox => {
+      checkbox.addEventListener('click', () => {
+        const box = checkbox.querySelector('div');
+        const isChecked = box.style.background === 'hsl(var(--primary))';
+        
+        if (isChecked) {
+          box.style.background = 'transparent';
+          box.style.border = '1px solid hsl(var(--input))';
+          box.innerHTML = '';
+        } else {
+          box.style.background = 'hsl(var(--primary))';
+          box.style.border = '1px solid hsl(var(--primary))';
+          box.innerHTML = '<svg class="h-3 w-3" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>';
+        }
+      });
+    });
+
+    // Radio interaction
+    document.querySelectorAll('[data-element-id^="radio-"]').forEach(radio => {
+      radio.addEventListener('click', () => {
+        // Reset all radios in the same group
+        const group = radio.closest('[data-element-id="radio-group"]');
+        group.querySelectorAll('[data-element-id^="radio-"]').forEach(r => {
+          const circle = r.querySelector('div');
+          circle.style.border = '1px solid hsl(var(--input))';
+          circle.innerHTML = '';
+        });
+        
+        // Set selected
+        const selectedCircle = radio.querySelector('div');
+        selectedCircle.style.border = '1px solid hsl(var(--primary))';
+        selectedCircle.innerHTML = '<div class="h-2.5 w-2.5 rounded-full" style="background: hsl(var(--primary))"></div>';
+      });
+    });
+  </script>
+</body>
+</html>
