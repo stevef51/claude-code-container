@@ -4,7 +4,7 @@
   issues for every missing or broken feature.
   context: fork
   disable-model-invocation: true
-  argument-hint: <legacy-url> <upgrade-url> [owner/repo] [optional-scope]
+  argument-hint: <legacy-url> <upgrade-url> [owner/repo] [issue-label] [optional-scope]
   ---
 
   # Feature Parity Auditor
@@ -37,11 +37,13 @@
   - `$0`: Legacy UI base URL (e.g. `http://localhost:3000`)
   - `$1`: Upgrade UI base URL (e.g. `http://localhost:4000`)
   - `$2`: GitHub repo (`owner/repo`) for issue filing
-  - `$3+`: optional scope hints (areas to prioritise)
+  - `$3`: issue label — a user-provided label to apply to **every** issue created in this run (e.g. `parity-audit-v2`, `migration-qa`)
+  - `$4+`: optional scope hints (areas to prioritise)
 
   If arguments are missing:
   - Legacy and Upgrade URLs are required — abort with a clear error if not provided.
   - Infer repo from `git remote` if not provided.
+  - **Issue label is required.** If not provided as an argument, you MUST ask the user for it before creating any issues. Do not invent a label — the user decides what label to use. This label is applied to every issue in addition to any other labels the skill adds.
 
   ## Execution Protocol
 
@@ -297,7 +299,7 @@
   Upgrade: https://raw.githubusercontent.com/owner/repo/parity-evidence/evidence/TIMESTAMP/upgrade-page-feature.mp4
     - Scope / Impact: Which users or workflows are affected by this gap.
     - Suggested Approach: Brief direction for implementing the missing feature.
-  - Labels: parity-gap and bug (create parity-gap label first if missing).
+  - Labels: **always** include the user-provided issue label (`$3`). Additionally include `parity-gap` and `bug` (create any missing labels first). The user's label takes priority and must appear on every issue — the skill may add other labels alongside it as appropriate per gap type.
 
   If CLI auth/permissions block issue creation:
   - Continue full audit.

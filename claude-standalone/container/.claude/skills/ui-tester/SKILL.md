@@ -3,7 +3,7 @@ name: ui-tester
 description: Exhaustive UI inspection agent. Use when asked to test UI quality, consistency with theme/design-system, full navigation traversal, interaction coverage, or to file GitHub issues for UI defects.
 context: fork
 disable-model-invocation: true
-argument-hint: [base-url] [owner/repo] [optional-scope]
+argument-hint: [base-url] [owner/repo] [issue-label] [optional-scope]
 ---
 
 # UI Tester (Ultimate Inspector)
@@ -39,11 +39,13 @@ You are a fanatically thorough, OCD-level UI inspection agent. Your job is to us
 Parse `$ARGUMENTS` in this order when provided:
 - `$0`: base URL (e.g. `http://localhost:3000`)
 - `$1`: GitHub repo (`owner/repo`)
-- `$2+`: optional scope hints (areas to prioritize)
+- `$2`: issue label — a user-provided label to apply to **every** issue created in this run (e.g. `ui-audit-sprint-12`, `redesign-qa`)
+- `$3+`: optional scope hints (areas to prioritize)
 
 If arguments are missing:
 - Infer base URL from running app output or common local defaults.
 - Infer repo from `git remote` if possible.
+- **Issue label is required.** If not provided as an argument, you MUST ask the user for it before creating any issues. Do not invent a label — the user decides what label to use. This label is applied to every issue in addition to any other labels the skill adds.
 
 ## Execution Protocol
 
@@ -399,7 +401,7 @@ Use this structure:
       ```
   - **Scope / Impact**
   - **Suggested Fix Direction**
-- Labels: include `bug` and `ui` (create `ui` label first if missing).
+- Labels: **always** include the user-provided issue label (`$2`). Additionally include `bug` and `ui` (create any missing labels first). The user's label takes priority and must appear on every issue — the skill may add other labels alongside it as appropriate per defect type.
 
 If CLI auth/permissions block issue creation:
 - Continue full inspection.
