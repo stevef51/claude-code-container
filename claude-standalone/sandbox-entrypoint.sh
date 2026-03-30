@@ -11,7 +11,7 @@ set -euo pipefail
 # docker-compose.yaml that launched this container.
 #
 # Required env vars:  REPO_URL, GIT_SSH_COMMAND
-# Optional env vars:  BRANCH, RESET_REPO (0|1), CLAUDE_RESUME (0|1)
+# Optional env vars:  BRANCH, RESET_REPO (0|1), CLEAR_STATE (0|1)
 #
 
 echo "────────────────────────────────────────────"
@@ -91,10 +91,22 @@ if [ -f /opt/tools/setup.sh ]; then
   echo "Tool setup complete."
 fi
 
+# ── Clear conversation state if requested ───────────────────────────────────
+if [ "${CLEAR_STATE:-0}" = "1" ]; then
+  echo "Clearing conversation state..."
+  find /home/claude/.claude -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null || true
+  chown -R claude:claude /home/claude/.claude
+fi
+
 # ── Build Claude command ────────────────────────────────────────────────────
 CLAUDE_CMD="claude --dangerously-skip-permissions"
-if [ "${CLAUDE_RESUME:-0}" = "1" ]; then
+
+# Auto-resume: if a previous conversation exists, continue it
+if [ -d /home/claude/.claude/projects ]; then
   CLAUDE_CMD="$CLAUDE_CMD --continue"
+  echo "Resuming previous conversation..."
+else
+  echo "Starting new conversation..."
 fi
 
 echo ""
