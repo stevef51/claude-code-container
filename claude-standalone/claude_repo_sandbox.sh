@@ -300,6 +300,18 @@ RUN_ARGS+=(
     if [ -S /var/run/docker.sock ]; then
       chmod 666 /var/run/docker.sock
     fi
+    # Ensure baked project assets are visible from the active repo workspace.
+    # Claude runs from /workspace/repo, so skills/design-system must live there.
+    if [ -d /workspace/.claude/skills ]; then
+      mkdir -p /workspace/repo/.claude/skills
+      cp -a /workspace/.claude/skills/. /workspace/repo/.claude/skills/
+      echo 'Synced skills to /workspace/repo/.claude/skills'
+    fi
+    if [ -d /workspace/design-system ]; then
+      mkdir -p /workspace/repo/design-system
+      cp -a /workspace/design-system/. /workspace/repo/design-system/
+      echo 'Synced design-system to /workspace/repo/design-system'
+    fi
     # Re-run persistent tool setup if it exists
     if [ -f /opt/tools/setup.sh ]; then
       echo 'Running /opt/tools/setup.sh ...'

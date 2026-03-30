@@ -99,6 +99,9 @@ RUN mkdir -p /workspace/input \
 # Copy the working Claude config
 COPY --chown=${USER_NAME}:${USER_NAME} claude-config.json /tmp/claude-config.json
 COPY --chown=${USER_NAME}:${USER_NAME} settings.local.json /tmp/settings.local.json
+COPY --chown=${USER_NAME}:${USER_NAME} container/.claude/ /workspace/.claude/
+COPY --chown=${USER_NAME}:${USER_NAME} container/.claude/skills/ui-tester/SKILL.md /workspace/.claude/skills/ui-tester/SKILL.md
+COPY --chown=${USER_NAME}:${USER_NAME} container/design-system/ /workspace/design-system/
 
 # Bake container-level instructions so Claude knows about /opt/tools, etc.
 COPY --chown=${USER_NAME}:${USER_NAME} CLAUDE.md /workspace/CLAUDE.md
